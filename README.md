@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is begining of legendary project
 
 To contribute to this repo
@@ -35,3 +36,6 @@ npm install
 #Run and check if it is running
 npm start
 ```
+=======
+This is readme
+>>>>>>> 3362f3b (Made massive changes, created seperate directy for files added navbar, login, register, need some designing)

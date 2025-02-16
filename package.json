@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "start": "electron ."
+=======
+    "start": "electron .",
+    "build": "electron-builder"
+>>>>>>> 3362f3b (Made massive changes, created seperate directy for files added navbar, login, register, need some designing)
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,14 @@
   "homepage": "https://github.com/sanjivthapasvt/Student-data-management#readme",
   "dependencies": {
     "axios": "^1.7.9",
+<<<<<<< HEAD
     "electron": "^34.2.0"
+=======
+    "ejs": "^3.1.10"
+  },
+  "devDependencies": {
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8"
+>>>>>>> 3362f3b (Made massive changes, created seperate directy for files added navbar, login, register, need some designing)
   }
 }
