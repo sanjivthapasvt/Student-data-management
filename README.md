@@ -2,9 +2,9 @@ This is begining of legendary project
 
 To contribute to this repo
 To get started:
-Fork this repo
-```bash
 
+```bash
+#Fork this repo
 #Clone the repo you forked
 git clone https://github.com/.......
 
