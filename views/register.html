@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../public/register.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <div class="container">
+      <form name="registration" method="get">
+        <div class="form-group">
+          <label for="firstname">First Name:</label>
+          <input type="text" name="firstname" id="firstname" />
+        </div>
+        <div class="form-group">
+          <label for="lastname">Last Name:</label>
+          <input type="text" name="lastname" id="lastname" />
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" name="dob" id="dob" />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" name="email" id="email" />
+        </div>
+        <div class="form-group">
+          <label for="phoneno">Phone No:</label>
+          <input type="number" name="phoneno" id="phoneno" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" minlength="8" />
+        </div>
+        <div class="form-group gender-group">
+          <label>Gender:</label>
+          <input type="radio" name="gender" value="Male" /> Male
+          <input type="radio" name="gender" value="Female" /> Female
+          <input type="radio" name="gender" value="Others" /> Others
+        </div>
+        <div class="form-group">
+          <label for="platform">Platform:</label>
+          <select name="platform" id="platform">
+            <option value="Tablet">Laptop</option>
+            <option value="Desktop">Desktop</option>
+            <option value="Mobile Phone">Mobile Phone</option>
+            <option value="Laptop">Tablet</option>
+          </select>
+        </div>
+        <input type="submit" value="Register" />
+        <input type="reset" value="Reset" />
+        <p>Already a member? <a href="login.html">Login here</a></p>
+      </form>
+    </div>
+    <script src="../public/script.js"></script>
+  </body>
+</html>

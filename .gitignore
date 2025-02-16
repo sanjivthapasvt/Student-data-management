@@ -1,1 +1,5 @@
 node_modules/
+<<<<<<< HEAD
+=======
+dist/
+>>>>>>> 3362f3b (Made massive changes, created seperate directy for files added navbar, login, register, need some designing)
