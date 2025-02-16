@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 This is begining of legendary project
 
 To contribute to this repo
