@@ -4,22 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management | bitGurkhas</title>
-    <link rel="stylesheet" href="../public//style.css">
+    <script src="../components/loadHead.js"></script>
+    <link rel="stylesheet" href="../public/style.css">
     <link rel="shortcut icon" href="bitGurkhas.png" type="image/x-icon">
 </head>
 <body>
 
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="logo">bit<span>Gurkhas</span></div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-            <button>🔍</button>
-        </div>
-        <div class="user-icon">👤 User</div>
-    </header>
-
-    <div class="main-container">
+<div id="navbar"></div>
+    <div class="main-container" style="margin-top: 7%;">
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3>Features haru</h3>
@@ -35,7 +27,7 @@
             <h2>My Student</h2>
 
             <div class="student-card">
-                <img src="../assets/me1.jpg" alt="Shishir Thapa">
+                <img src="../assets/img/me1.jpg" alt="Shishir Thapa">
                 <div class="student-info">
                     <p><strong>Name:</strong> Shishir Thapa</p>
                     <p><strong>Class:</strong> BCA III</p>
@@ -47,7 +39,7 @@
             </div>
 
             <div class="student-card">
-                <img src="../assets/boa.jpg" alt="Boa Hancock">
+                <img src="../assets/img/boa.jpg" alt="Boa Hancock">
                 <div class="student-info">
                     <p><strong>Name:</strong> Boa Hancock</p>
                     <p><strong>Class:</strong> BCA III</p>
@@ -60,11 +52,14 @@
         </section>
 
         <!-- Information Section -->
+         <div style="margin-top: 7%;">
         <aside class="info-box">
             <h2>Information</h2>
             <p>A <span class="highlight yellow">student</span> is an individual who is enrolled in an educational program, ranging from school to <span class="highlight red">university</span>. They engage in learning activities, such as attending classes, completing assignments, and taking exams, to acquire <span class="highlight blue">knowledge</span>.</p>
         </aside>
+      </div>
     </div>
     <script src="../public/script.js"></script>
+    <script src="../components/loadNavbar.js"></script>
 </body>
 </html>
