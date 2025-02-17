@@ -49,8 +49,8 @@
 
 /* Sidebar */
 .sidebar {
-    background: #0047ab;
-    color: white;
+    background: white;
+    color: black;
     padding: 20px;
     width: 200px;
 }
