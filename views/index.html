@@ -1,26 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./assets/bitgurkhas.jpg"
-      type="image/x-icon"
-    />
-    <title>Student Management</title>
-  </head>
-  <body>
-    <div id="navbar"></div>
-    <center>
-      <h1>Logo</h1>
-      <img
-        src="../assets/bitgurkhas.jpg"
-        style="height: 10%; width: 10%; border-radius: 50%"
-        alt="Logo"
-      />
-      <p>Bravery Meets Technology</p>
-    </center>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management | bitGurkhas</title>
+    <link rel="stylesheet" href="../public//style.css">
+    <link rel="shortcut icon" href="bitGurkhas.png" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">bit<span>Gurkhas</span></div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <button>🔍</button>
+        </div>
+        <div class="user-icon">👤 User</div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Features haru</h3>
+            <ul>
+                <li>Student Haru ko Info</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="content">
+            <h2>My Student</h2>
+
+            <div class="student-card">
+                <img src="../assets/me1.jpg" alt="Shishir Thapa">
+                <div class="student-info">
+                    <p><strong>Name:</strong> Shishir Thapa</p>
+                    <p><strong>Class:</strong> BCA III</p>
+                    <p><strong>Roll:</strong> 23</p>
+                    <p><strong>Address:</strong> Hetauda-5</p>
+                    <p><strong>Section:</strong> A</p>
+                </div>
+                <button class="delete-btn">❌</button>
+            </div>
+
+            <div class="student-card">
+                <img src="../assets/boa.jpg" alt="Boa Hancock">
+                <div class="student-info">
+                    <p><strong>Name:</strong> Boa Hancock</p>
+                    <p><strong>Class:</strong> BCA III</p>
+                    <p><strong>Roll:</strong> 23</p>
+                    <p><strong>Address:</strong> Hetauda-5</p>
+                    <p><strong>Section:</strong> A</p>
+                </div>
+                <button class="delete-btn">❌</button>
+            </div>
+        </section>
+
+        <!-- Information Section -->
+        <aside class="info-box">
+            <h2>Information</h2>
+            <p>A <span class="highlight yellow">student</span> is an individual who is enrolled in an educational program, ranging from school to <span class="highlight red">university</span>. They engage in learning activities, such as attending classes, completing assignments, and taking exams, to acquire <span class="highlight blue">knowledge</span>.</p>
+        </aside>
+    </div>
     <script src="../public/script.js"></script>
-  </body>
+</body>
 </html>
