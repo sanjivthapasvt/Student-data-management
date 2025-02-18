@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('students/', views.StudentListCreate.as_view(), name='student-view-create'),
-    path('students/<int:id>/', views.StudentRetrieveUpdateDestroy.as_view(), name='student-view-retrieve-update-destroy'),
+    path('students/delete/<int:id>/', views.StudentDelete.as_view(), name='delete-student'),
 ]
 
 if settings.DEBUG:
