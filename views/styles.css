@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0B2B66;
+    color: white;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #0B2B66;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.buttons {
+    display: flex;
+}
+
+.signup, .login {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.signup {
+    background-color: #2173F0;
+    color: white;
+    margin-right: 10px;
+}
+
+.login {
+    background-color: white;
+    color: #0B2B66;
+}
+
+main {
+    padding: 50px 20px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+p {
+    font-size: 16px;
+    margin: 10px 0 30px;
+}
+
+.cta-buttons {
+    margin: 20px 0;
+}
+
+.primary-btn, .secondary-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.primary-btn {
+    background-color: #2173F0;
+    color: white;
+    border: none;
+}
+
+.secondary-btn {
+    background-color: white;
+    color: #0B2B66;
+    border: none;
+}
+
+.video-section {
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.image-container img {
+    width: 80%;
+    max-width: 600px;
+    margin-top: 30px;
+}
+
+footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.chat-icon {
+    background-color: #6C42F5;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+}
