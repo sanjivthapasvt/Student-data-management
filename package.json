@@ -29,7 +29,8 @@
   "homepage": "https://github.com/sanjivthapasvt/Student-data-management#readme",
   "dependencies": {
     "axios": "^1.7.9",
-    "ejs": "^3.1.10"
+    "ejs": "^3.1.10",
+    "form-data": "^4.0.2"
   },
   "devDependencies": {
     "electron": "^34.2.0",
