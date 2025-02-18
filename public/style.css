@@ -6,6 +6,18 @@
     font-family: Arial, sans-serif;
 }
 
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffa500;
+    padding: 15px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
 .logo span {
     color: navy;
 }
@@ -105,7 +117,9 @@
     font-weight: bold;
 }
 
-
+.yellow {
+    color: orange;
+}
 
 .red {
     color: red;

@@ -1,0 +1,36 @@
+body {
+    /* display: flex;
+    justify-content: flex-start;
+    align-items: flex-start; */
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+}
+
+.student-card {
+    width: 350px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+    padding: 20px;
+    text-align: center;
+}
+.student-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4a90e2;
+    margin-bottom: 15px;
+}
+.student-info {
+    text-align: left;
+    margin-top: 10px;
+}
+.student-info p {
+    margin: 8px 0;
+}
+.label {
+    font-weight: bold;
+}
