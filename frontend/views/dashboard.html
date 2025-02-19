@@ -1,0 +1,7 @@
+<!-- Add this script tag at the start of the body tag -->
+<script>
+const checkAuth = require('../middleware/auth');
+if (!checkAuth()) {
+    window.location.href = 'sign-in.html';
+}
+</script>

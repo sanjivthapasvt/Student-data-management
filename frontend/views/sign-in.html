@@ -24,17 +24,17 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start" id="sign-in-form">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Username</label>
-                    <input type="text" id="login-username" class="form-control">
+                    <input type="text" id="username" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" id="login-password" class="form-control">
+                    <input type="password" id="password" class="form-control">
                   </div>
                   <div class="text-center">
-                    <button  onclick="login()" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
                     Don't have an account?
@@ -82,5 +82,21 @@
   <script src="../components/loadNavbar.js"></script>
   <script src="../assets/js/material-dashboard.js"></script>
   <script src="../public/auth.js"></script>
+  <script>
+    const authService = require('../services/auth');
+
+    document.getElementById('sign-in-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const success = await authService.login(username, password);
+        if (success) {
+            window.location.href = 'index.html';
+        } else {
+            alert('Login failed. Please check your credentials.');
+        }
+    });
+  </script>
 </body>
 </html>

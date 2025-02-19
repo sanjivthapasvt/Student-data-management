@@ -60,7 +60,7 @@
           </a>
         </li>
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account</h6>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="profile.html">
@@ -69,15 +69,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="sign-in.html">
-            <i class="material-symbols-rounded opacity-5">login</i>
-            <span class="nav-link-text ms-1">Sign In</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="sign-up.html">
-            <i class="material-symbols-rounded opacity-5">assignment</i>
-            <span class="nav-link-text ms-1">Sign Up</span>
+          <a class="nav-link text-dark" href="#" id="logout-btn">
+            <i class="material-symbols-rounded opacity-5">logout</i>
+            <span class="nav-link-text ms-1">Logout</span>
           </a>
         </li>
       </ul>
@@ -218,6 +212,14 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="../assets/js/material-dashboard.min.js"></script>
+  <script>
+    document.getElementById('logout-btn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const authService = require('../services/auth');
+      authService.logout();
+      window.location.href = 'sign-in.html';
+    });
+  </script>
 </body>
 
 </html>
