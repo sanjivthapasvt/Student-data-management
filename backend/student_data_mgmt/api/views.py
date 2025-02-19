@@ -18,7 +18,7 @@ class RegisterView(APIView):
         
         user = User.objects.create_user(username=username, email=email, password=password)
         return Response({"message": "User Created sucessfully"}, status=201)
-        
+
 class LoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
