@@ -6,8 +6,12 @@ from . import views
 
 
 urlpatterns = [
-    path('students/', views.StudentListCreate.as_view(), name='student-view-create'),
-    path('students/delete/<int:id>/', views.StudentDelete.as_view(), name='delete-student'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    # path('students/', views.StudentListCreate.as_view(), name='student-view-create'),
+    # path('students/delete/<int:id>/', views.StudentDelete.as_view(), name='delete-student'),
+
 ]
 
 if settings.DEBUG:
