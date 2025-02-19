@@ -1,15 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
-
-//for getting data from rest api
-async function uploadStudent() {
-    const form = new FormData();
-    form.append
-}
-
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -17,6 +7,7 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
         },
     });
 
@@ -24,3 +15,16 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow);
+
+// Handle window controls
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});

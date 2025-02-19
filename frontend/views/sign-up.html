@@ -29,25 +29,26 @@
                   <p class="mb-0">Enter your email and password to register</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" id="sign-up-form">
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Username</label>
-                      <input type="text" id="reg-username" class="form-control">
+                      <input type="text" id="username" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" id="reg-email" class="form-control">
+                      <input type="email" id="email" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" id="reg-password" class="form-control">
+                      <input type="password" id="password" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Confirm Password</label>
-                      <input type="password"id="reg-confirm-password" class="form-control">
+                      <input type="password" id="confirm-password" class="form-control" required>
                     </div>
+                    <div id="errorMessage" class="text-danger"></div>
                     <div class="text-center">
-                      <button  onclick="register()" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                      <button type="submit" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Sign Up</button>
                     </div>
                   </form>
                 </div>
@@ -82,6 +83,36 @@
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script src="../components/loadNavbar.js"></script>
   <script src="../public/auth.js"></script>
+  <script>
+    const authService = require('../services/auth');
+
+    document.getElementById('sign-up-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorMessageElement = document.getElementById('errorMessage');
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password !== confirmPassword) {
+        errorMessageElement.textContent = "Passwords don't match";
+        return;
+      }
+
+      try {
+        const result = await authService.register(username, email, password, confirmPassword);
+        if (result.success) {
+          alert('Registration successful! Please sign in.');
+          window.location.href = 'sign-in.html';
+        } else {
+          errorMessageElement.textContent = result.error?.message || 'Registration failed. Please try again.';
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        errorMessageElement.textContent = 'An error occurred during registration. Please try again.';
+      }
+    });
+  </script>
 </body>
 
 </html>
