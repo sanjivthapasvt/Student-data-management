@@ -258,3 +258,42 @@ async function handleCreateStudent(event) {
     );
   }
 }
+
+// Add this to your existing script.js file
+document.addEventListener('DOMContentLoaded', () => {
+  const createForm = document.getElementById('createStudentForm');
+  if (createForm) {
+    createForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      try {
+        const formData = new FormData();
+        formData.append('name', document.getElementById('studentName').value);
+        formData.append('roll', document.getElementById('studentRoll').value);
+        formData.append('student_class', document.getElementById('studentClass').value);
+        formData.append('section', document.getElementById('studentSection').value);
+        formData.append('address', document.getElementById('studentAddress').value);
+
+        const photoInput = document.getElementById('studentPhoto');
+        if (photoInput.files.length > 0) {
+          formData.append('photo', photoInput.files[0]);
+        }
+
+        await studentService.createStudent(formData);
+        
+        // Clear form and close modal
+        createForm.reset();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createStudentModal'));
+        modal.hide();
+        
+        // Refresh student list
+        await loadStudents();
+        
+        alert('Student created successfully!');
+      } catch (error) {
+        console.error('Error creating student:', error);
+        alert('Error creating student: ' + (error.response?.data?.detail || error.message));
+      }
+    });
+  }
+});
