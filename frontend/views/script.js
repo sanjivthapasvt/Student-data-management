@@ -252,14 +252,13 @@ async function handleCreateStudent(event) {
     await loadStudents();
     alert("Student created successfully");
   } catch (error) {
-    alert(
-      "Error creating student: " +
-        (error.response?.data?.detail || error.message)
-    );
+    // // alert(
+    // //   "Error creating student: " +
+    // //     (error.response?.data?.detail || error.message)
+    // );
   }
 }
 
-// Add this to your existing script.js file
 document.addEventListener('DOMContentLoaded', () => {
   const createForm = document.getElementById('createStudentForm');
   if (createForm) {
@@ -292,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Student created successfully!');
       } catch (error) {
         console.error('Error creating student:', error);
-        alert('Error creating student: ' + (error.response?.data?.detail || error.message));
+        // alert('Error creating student: ' + (error.response?.data?.detail || error.message));
       }
     });
   }
