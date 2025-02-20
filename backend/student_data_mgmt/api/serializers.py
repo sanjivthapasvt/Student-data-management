@@ -23,4 +23,4 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['id', 'name', 'roll', 'city', 'Class', 'photo']
+        fields = '__all__'
