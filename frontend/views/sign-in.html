@@ -90,11 +90,16 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const success = await authService.login(username, password);
-        if (success) {
-            window.location.href = 'index.html';
-        } else {
-            alert('Login failed. Please check your credentials.');
+        try {
+            const success = await authService.login(username, password);
+            if (success) {
+                window.location.href = 'index.html';
+            } else {
+                alert('Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred during login.');
         }
     });
   </script>

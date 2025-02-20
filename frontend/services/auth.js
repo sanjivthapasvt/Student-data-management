@@ -1,5 +1,4 @@
 const axios = require('axios');
-
 const API_URL = 'http://localhost:8000/api/auth/';
 
 const authService = {
@@ -42,13 +41,33 @@ const authService = {
         }
     },
 
-    isAuthenticated() {
-        return localStorage.getItem('accessToken') !== null;
+    async logout() {
+        try {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                await axios.post(API_URL + 'logout/', {
+                    refresh_token: localStorage.getItem('refreshToken')
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+            }
+            // Clear storage regardless of API call success
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            return true;
+        } catch (error) {
+            // Clear storage even if API call fails
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            console.error('Logout error:', error);
+            return true; // Return true anyway since we want to redirect
+        }
     },
 
-    logout() {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+    isAuthenticated() {
+        return !!localStorage.getItem('accessToken');
     }
 };
 
