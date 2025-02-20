@@ -137,27 +137,26 @@
       <div id="students-list" class="row"></div>
     </div>
 <div class="student-cards-wrapper" id="studentCardsContainer">
-  <!-- Student Card Template -->
-  <div class="student-card" id="student-${student.id}">
-    <img src="${student.photo || '../assets/img/placeholder.jpg'}" alt="Student Photo" class="student-photo">
-
-    <div class="student-info">
-      <p><span class="label">Name:</span> ${student.name}</p>
+  <!-- Student cards will be rendered here by script.js -->
+</div>
+      <!-- Add more student cards here -->
+    </div>
+  </main>
+  <!-- <div class="fixed-plugin">
       <p><span class="label">Roll No:</span> ${student.roll}</p>
       <p><span class="label">Class:</span> ${student.student_class}</p>
       <p><span class="label">Address:</span> ${student.address}</p>
       <p><span class="label">Section:</span> ${student.section}</p>
     </div>
 
-    <!-- Action Buttons -->
     <div class="card-actions">
       <button class="btn btn-edit" onclick="openEditModal(student.id)">Edit</button>
       <button class="btn btn-delete" onclick="handleDelete(student.id)">Delete</button>
     </div>
   </div>
-</div>
-      <!-- Add more student cards here -->
-    </div>
+</div> -->
+
+
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -215,6 +214,8 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+     <!-- Place this in your head or before your script.js -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
