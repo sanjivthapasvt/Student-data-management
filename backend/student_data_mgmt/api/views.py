@@ -8,7 +8,7 @@ from rest_framework import status
 from .serializers import UserSerializer, StudentSerializer
 from .models import Student
 from django.shortcuts import get_object_or_404
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
 #For authentication created Register, Login and Logout views
@@ -76,7 +76,7 @@ class LogoutView(APIView):
             
 class StudentCreate(APIView):
     permission_classes = [IsAuthenticated]  # Only authenticated users can add students
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     def post(self, request):
         serializer = StudentSerializer(data=request.data)
