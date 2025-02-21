@@ -1,5 +1,5 @@
 from django.db import models
-
+import os
 # Create your models here.
 class Student(models.Model):
     name = models.CharField(max_length=100)
@@ -14,3 +14,9 @@ class Student(models.Model):
     
     def __str__(self):
         return self.name
+
+#remove image after deleting entry in database
+    def delete(self, *args, **kwargs):
+        if self.photo and os.path.isfile(self.photo.path):
+            os.remove(self.photo.path)
+        super().delete(*args, **kwargs)
