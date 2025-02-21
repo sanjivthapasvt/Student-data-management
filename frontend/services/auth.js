@@ -11,15 +11,23 @@ const authService = {
                 confirm_password: confirmPassword
             });
             return {
-                success: response.status === 201,
+                success: true,
                 data: response.data
             };
         } catch (error) {
-            console.error('Registration error:', error.response?.data || error.message);
-            return {
-                success: false,
-                error: error.response?.data || 'Registration failed'
-            };
+            if (error.response?.data) {
+                // Handle specific error messages from backend
+                if (error.response.data.username) {
+                    throw new Error(error.response.data.username[0]);
+                } else if (error.response.data.email) {
+                    throw new Error(error.response.data.email[0]);
+                } else if (error.response.data.password) {
+                    throw new Error(error.response.data.password[0]);
+                } else if (typeof error.response.data === 'string') {
+                    throw new Error(error.response.data);
+                }
+            }
+            throw new Error('Registration failed. Please try again.');
         }
     },
 

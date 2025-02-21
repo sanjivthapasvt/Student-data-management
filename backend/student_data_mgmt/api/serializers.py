@@ -13,6 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError("Passwords don't match")
+        
+        username = data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError({"username": "This username is already taken"})
+        
         return data
     
     def create(self, validated_data):
