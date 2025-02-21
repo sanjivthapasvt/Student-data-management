@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px; /* Wider to match the image */
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 1.5em;
+}
+
+.progress-section {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}
+
+#progress-text {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: #2c3e50;
+}
+
+.progress-bar {
+    background: #dfe6e9;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: #3498db;
+    transition: width 0.3s ease-in-out;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #2980b9;
+}
+
+.download-draft-btn {
+    background: #3498db;
+    margin-bottom: 15px;
+    width: 200px;
+}
+
+.table-section {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+thead {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    text-align: center;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+td {
+    vertical-align: middle;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-cell {
+    text-align: center;
+}
+
+.turned-in {
+    color: #2ecc71;
+    font-size: 18px;
+    text-align: center;
+}
+
+.not-turned-in {
+    color: #e74c3c;
+    font-size: 18px;
+    text-align: center;
+}
