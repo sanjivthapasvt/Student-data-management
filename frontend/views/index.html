@@ -4,16 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>
-    Dashboard
-  </title>
+  <title>Dashboard</title>
   <script src="../components/loadHead.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios for API calls -->
   <link rel="stylesheet" href="../public/dashboard.css">
 </head>
 
-<body class="g-sidenav-show  bg-gray-100">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <span class="navbar-brand px-4 py-3 m-0">
@@ -22,7 +20,7 @@
       </span>
     </div>
     <hr class="horizontal dark mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active bg-gradient-dark text-white" href="page.html">
@@ -45,7 +43,7 @@
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">
             <i class="material-symbols-rounded opacity-5">check_circle</i>
-            <span class="nav-link-text ms-1">Attendence</span>
+            <span class="nav-link-text ms-1">Attendance</span>
           </a>
         </li>
         <li class="nav-item">
@@ -77,14 +75,14 @@
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
       <div class="mx-3">
         <a class="btn btn-outline-dark mt-4 w-100" href="#" type="button">Bit Gurkhas</a>
         <a class="btn bg-gradient-dark w-100" href="https://github.com/bitgurkhas" type="button">Github</a>
       </div>
     </div>
   </aside>
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
       <div class="container-fluid py-1 px-3">
@@ -100,7 +98,7 @@
               <input type="text" class="form-control">
             </div>
           </div>
-          <ul class="navbar-nav d-flex align-items-center  justify-content-end">
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="#">Some Feature</a>
             </li>
@@ -130,20 +128,15 @@
       <div class="row">
         <div class="col-12 text-end mb-4">
           <button class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#createStudentModal">
-            <i class="material-symbols-rounded">add</i>&nbsp;&nbsp;Add New Student
+            <i class="material-symbols-rounded">add</i> Add New Student
           </button>
         </div>
       </div>
-      <!-- Add this div for students list -->
-      <div id="students-list" class="row"></div>
+      <!-- Student cards will be rendered here -->
+      <div class="student-cards-wrapper" id="studentCardsContainer"></div>
     </div>
-  <div class="student-cards-wrapper" id="studentCardsContainer">
-      <!-- Student cards will be rendered here by script.js -->
-  </div>
   </main>
 
-
-  </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="material-symbols-rounded py-2">settings</i>
@@ -155,7 +148,6 @@
             <i class="material-symbols-rounded">clear</i>
           </button>
         </div>
-        <!-- End Toggle Button -->
         <!-- Sidebar Backgrounds -->
         <div>
           <h6 class="mb-0">Sidebar Colors</h6>
@@ -178,7 +170,7 @@
         <div class="d-flex">
           <button class="btn bg-gradient-dark px-3 mb-2" data-class="bg-gradient-dark" onclick="sidebarType(this)">Dark</button>
           <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
-          <button class="btn bg-gradient-dark px-3 mb-2  active ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
+          <button class="btn bg-gradient-dark px-3 mb-2 active ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
         </div>
         <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
         <!-- Navbar Fixed -->
@@ -195,113 +187,114 @@
             <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
         </div>
-        </div>
       </div>
     </div>
   </div>
 
-<!-- Create Student Modal -->
-<div class="modal fade" id="createStudentModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="card">
-        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-          <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Add New Student</h4>
+  <!-- Create Student Modal -->
+  <div class="modal fade" id="createStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="card">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+              <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Add New Student</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <form role="form" id="createStudentForm" class="text-start">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Name</label>
+                <input type="text" id="studentName" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Roll Number</label>
+                <input type="number" id="studentRoll" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Class</label>
+                <input type="text" id="studentClass" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Section</label>
+                <input type="text" id="studentSection" class="form-control">
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Address</label>
+                <input type="text" id="studentAddress" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <input type="file" id="studentPhoto" class="form-control" accept="image/*">
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Create Student</button>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="card-body">
-          <form role="form" id="createStudentForm" class="text-start">
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Name</label>
-              <input type="text" id="studentName" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Roll Number</label>
-              <input type="number" id="studentRoll" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Class</label>
-              <input type="text" id="studentClass" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Section</label>
-              <input type="text" id="studentSection" class="form-control">
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Address</label>
-              <input type="text" id="studentAddress" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <input type="file" id="studentPhoto" class="form-control" accept="image/*">
-            </div>
-
-            <div class="text-center">
-              <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Create Student</button>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="editStudentModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="card">
-        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-          <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Edit Student</h4>
+  <!-- Edit Student Modal -->
+  <div class="modal fade" id="editStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="card">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+              <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Edit Student</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <form role="form" id="editStudentForm" class="text-start">
+              <input type="hidden" id="editStudentId">
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Name</label>
+                <input type="text" id="editStudentName" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Roll Number</label>
+                <input type="number" id="editStudentRoll" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Class</label>
+                <input type="text" id="editStudentClass" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Section</label>
+                <input type="text" id="editStudentSection" class="form-control">
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Address</label>
+                <input type="text" id="editStudentAddress" class="form-control" required>
+              </div>
+
+              <div class="input-group input-group-outline my-3">
+                <input type="file" id="editStudentPhoto" class="form-control" accept="image/*">
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update Student</button>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="card-body">
-          <form role="form" id="editStudentForm" class="text-start">
-            <input type="hidden" id="editStudentId">
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Name</label>
-              <input type="text" id="editStudentName" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Roll Number</label>
-              <input type="number" id="editStudentRoll" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Class</label>
-              <input type="text" id="editStudentClass" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Section</label>
-              <input type="text" id="editStudentSection" class="form-control">
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <label class="form-label">Address</label>
-              <input type="text" id="editStudentAddress" class="form-control" required>
-            </div>
-
-            <div class="input-group input-group-outline my-3">
-              <input type="file" id="editStudentPhoto" class="form-control" accept="image/*">
-            </div>
-
-            <div class="text-center">
-              <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update Student</button>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   </div>
-</div>
-  <!--   Core JS Files   -->
+
+  <!-- Core JS Files -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -310,9 +303,7 @@
   <script>
     let win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
-      let options = {
-        damping: '0.5'
-      }
+      let options = { damping: '0.5' };
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
@@ -322,11 +313,22 @@
   <script src="./script.js"></script>
 
   <script>
+    // Logout functionality (unchanged)
     document.getElementById('logout-btn').addEventListener('click', async (e) => {
       e.preventDefault();
-      const authService = require('../services/auth');
-      authService.logout();
-      window.location.href = 'sign-in.html';
+      try {
+        const response = await axios.post('/logout/', {
+          refresh_token: localStorage.getItem('refresh_token')
+        }, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+        });
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = 'sign-in.html';
+      } catch (error) {
+        console.error('Logout failed:', error);
+        alert('Logout failed. Please try again.');
+      }
     });
   </script>
 </body>

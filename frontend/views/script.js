@@ -275,3 +275,41 @@ async function handleCreateStudent(event) {
     );
   }
 }
+// Existing handleCreateStudent function (modified to add notification for Assignment Dashboard)
+async function handleCreateStudent(event) {
+  event.preventDefault();
+  const formData = new FormData();
+  formData.append("name", document.getElementById("studentName").value);
+  formData.append("roll", document.getElementById("studentRoll").value);
+  formData.append(
+    "student_class",
+    document.getElementById("studentClass").value
+  );
+  formData.append("section", document.getElementById("studentSection").value);
+  formData.append("address", document.getElementById("studentAddress").value);
+
+  const photoInput = document.getElementById("studentPhoto");
+  if (photoInput.files.length > 0) {
+    formData.append("photo", photoInput.files[0]);
+  }
+
+  try {
+    await studentService.createStudent(formData);
+    // Clear form and reload students in Dashboard
+    document.getElementById("createStudentForm").reset();
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("createStudentModal")
+    );
+    if (modal) modal.hide();
+    await loadStudents();
+    alert("Student created successfully");
+
+    // Notify Assignment Dashboard of new student via localStorage
+    localStorage.setItem('newStudentCreated', Date.now().toString());
+  } catch (error) {
+    alert(
+      "Error creating student: " +
+        (error.response?.data?.detail || error.message)
+    );
+  }
+}
