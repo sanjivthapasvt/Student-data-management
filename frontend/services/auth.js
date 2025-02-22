@@ -1,3 +1,9 @@
+//for authentication
+//This file contains the functions to register, login, and logout a user.
+//The register function sends a POST request to the API with the user's username, email, password, and confirm password.
+//The login function sends a POST request to the API with the user's username and password.
+//The logout function sends a POST request to the API with the user's refresh token.
+//The isAuthenticated function checks if the user is authenticated by checking if the access token is stored in the local storage.
 const axios = require('axios');
 const API_URL = 'http://localhost:8000/api/auth/';
 
@@ -70,7 +76,7 @@ const authService = {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             console.error('Logout error:', error);
-            return true; // Return true anyway since we want to redirect
+            return true;
         }
     },
 

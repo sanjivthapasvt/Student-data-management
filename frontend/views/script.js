@@ -2,7 +2,7 @@ class StudentService {
   constructor() {
     this.API_URL = "http://localhost:8000/api/";
   }
-
+//for viewing students
   async getStudents() {
     try {
       const token = localStorage.getItem("accessToken");
@@ -18,7 +18,7 @@ class StudentService {
       throw error;
     }
   }
-
+//for deleting students
   async deleteStudent(id) {
     try {
       const token = localStorage.getItem("accessToken");
@@ -31,7 +31,7 @@ class StudentService {
       throw error;
     }
   }
-
+//for editing students
   async updateStudent(id, data) {
     try {
       const token = localStorage.getItem("accessToken");
@@ -47,7 +47,7 @@ class StudentService {
       throw error;
     }
   }
-
+//for creating students
   async createStudent(data) {
     try {
       const token = localStorage.getItem("accessToken");
@@ -64,7 +64,7 @@ class StudentService {
     }
   }
 
-  // Helper: get one student for editing
+//for getting student details
   async getStudent(id) {
     try {
       const token = localStorage.getItem("accessToken");
@@ -83,8 +83,6 @@ const studentService = new StudentService();
 
 document.addEventListener("DOMContentLoaded", () => {
   loadStudents();
-
-  // Optional: Bind create and edit forms if you have them
   document
     .getElementById("createStudentForm")
     ?.addEventListener("submit", handleCreateStudent);
@@ -108,7 +106,7 @@ async function loadStudents() {
   } catch (error) {
     const errorMessage = error.response?.data?.detail || error.message;
     container.innerHTML = `<div class="alert alert-danger">Error loading students: ${errorMessage}</div>`;
-    // Optionally, force logout if unauthorized
+    //force logout if unauthorized
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
       window.location.href = "sign-in.html";
@@ -116,10 +114,10 @@ async function loadStudents() {
   }
 }
 
-// In your script.js or wherever you create the student card
+// Create a student card HTML element
 function createStudentCard(student) {
   // Get the backend URL from your config or environment
-  const BACKEND_URL = 'http://localhost:8000/api'; // adjust according to your backend URL
+  const BACKEND_URL = 'http://localhost:8000/api';
   
   return `
     <div class="student-card" id="student-${student.id}">
@@ -166,24 +164,43 @@ async function handleDelete(studentId) {
 async function openEditModal(studentId) {
   try {
     const student = await studentService.getStudent(studentId);
-    // Fill in the edit form fields (assumes you have a modal with these IDs)
+    
+    // Fill in the edit form fields
     document.getElementById("editStudentId").value = student.id;
-    document.getElementById("editStudentName").value = student.name;
-    document.getElementById("editStudentRoll").value = student.roll;
-    document.getElementById("editStudentClass").value = student.student_class;
-    document.getElementById("editStudentSection").value = student.section || "";
-    document.getElementById("editStudentAddress").value = student.address;
+    
+    // Get all input fields
+    const inputGroups = document.querySelectorAll('#editStudentForm .input-group');
+    
+    // For each input field, set value and update classes properly
+    const fields = [
+      { id: "editStudentName", value: student.name },
+      { id: "editStudentRoll", value: student.roll },
+      { id: "editStudentClass", value: student.student_class },
+      { id: "editStudentSection", value: student.section || "" },
+      { id: "editStudentAddress", value: student.address }
+    ];
 
-    // Show the edit modal
-    const modal = new bootstrap.Modal(
-      document.getElementById("editStudentModal")
-    );
+    fields.forEach(field => {
+      const inputGroup = document.getElementById(field.id).parentElement;
+      const input = document.getElementById(field.id);
+      
+      input.value = field.value;
+      
+      if (field.value) {
+        inputGroup.classList.add('is-filled');
+      } else {
+        inputGroup.classList.remove('is-filled');
+      }
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById("editStudentModal"));
     modal.show();
   } catch (error) {
     alert("Error loading student details: " + error.message);
   }
 }
 
+// handle the form submission to edit a student
 async function handleEditStudent(event) {
   event.preventDefault();
   const studentId = document.getElementById("editStudentId").value;
@@ -223,7 +240,7 @@ async function handleEditStudent(event) {
     );
   }
 }
-
+//handle form submission of create student
 async function handleCreateStudent(event) {
   event.preventDefault();
   const formData = new FormData();
@@ -252,47 +269,9 @@ async function handleCreateStudent(event) {
     await loadStudents();
     alert("Student created successfully");
   } catch (error) {
-    // // alert(
-    // //   "Error creating student: " +
-    // //     (error.response?.data?.detail || error.message)
-    // );
+    alert(
+      "Error creating student: " +
+        (error.response?.data?.detail || error.message)
+    );
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const createForm = document.getElementById('createStudentForm');
-  if (createForm) {
-    createForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      try {
-        const formData = new FormData();
-        formData.append('name', document.getElementById('studentName').value);
-        formData.append('roll', document.getElementById('studentRoll').value);
-        formData.append('student_class', document.getElementById('studentClass').value);
-        formData.append('section', document.getElementById('studentSection').value);
-        formData.append('address', document.getElementById('studentAddress').value);
-
-        const photoInput = document.getElementById('studentPhoto');
-        if (photoInput.files.length > 0) {
-          formData.append('photo', photoInput.files[0]);
-        }
-
-        await studentService.createStudent(formData);
-        
-        // Clear form and close modal
-        createForm.reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('createStudentModal'));
-        modal.hide();
-        
-        // Refresh student list
-        await loadStudents();
-        
-        alert('Student created successfully!');
-      } catch (error) {
-        console.error('Error creating student:', error);
-        // alert('Error creating student: ' + (error.response?.data?.detail || error.message));
-      }
-    });
-  }
-});

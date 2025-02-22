@@ -8,6 +8,7 @@
     Dashboard
   </title>
   <script src="../components/loadHead.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../public/dashboard.css">
 </head>
 
@@ -136,25 +137,10 @@
       <!-- Add this div for students list -->
       <div id="students-list" class="row"></div>
     </div>
-<div class="student-cards-wrapper" id="studentCardsContainer">
-  <!-- Student cards will be rendered here by script.js -->
-</div>
-      <!-- Add more student cards here -->
-    </div>
-  </main>
-  <!-- <div class="fixed-plugin">
-      <p><span class="label">Roll No:</span> ${student.roll}</p>
-      <p><span class="label">Class:</span> ${student.student_class}</p>
-      <p><span class="label">Address:</span> ${student.address}</p>
-      <p><span class="label">Section:</span> ${student.section}</p>
-    </div>
-
-    <div class="card-actions">
-      <button class="btn btn-edit" onclick="openEditModal(student.id)">Edit</button>
-      <button class="btn btn-delete" onclick="handleDelete(student.id)">Delete</button>
-    </div>
+  <div class="student-cards-wrapper" id="studentCardsContainer">
+      <!-- Student cards will be rendered here by script.js -->
   </div>
-</div> -->
+  </main>
 
 
   </main>
@@ -214,8 +200,6 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-     <!-- Place this in your head or before your script.js -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -287,6 +271,57 @@
 
             <div class="text-center">
               <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Create Student</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editStudentModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Edit Student</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <form role="form" id="editStudentForm" class="text-start">
+            <input type="hidden" id="editStudentId">
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Name</label>
+              <input type="text" id="editStudentName" class="form-control" required>
+            </div>
+
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Roll Number</label>
+              <input type="number" id="editStudentRoll" class="form-control" required>
+            </div>
+
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Class</label>
+              <input type="text" id="editStudentClass" class="form-control" required>
+            </div>
+
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Section</label>
+              <input type="text" id="editStudentSection" class="form-control">
+            </div>
+
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Address</label>
+              <input type="text" id="editStudentAddress" class="form-control" required>
+            </div>
+
+            <div class="input-group input-group-outline my-3">
+              <input type="file" id="editStudentPhoto" class="form-control" accept="image/*">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update Student</button>
             </div>
           </form>
         </div>
