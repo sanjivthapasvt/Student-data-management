@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import UserSerializer, StudentSerializer, StudentMarksSerializer
-from .models import Student
+from .models import Student, StudentMarks
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
@@ -121,36 +121,49 @@ class StudentDetail(APIView):
         student = get_object_or_404(Student, id=id)
         student.delete()
         return Response({"message": "Student deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-    
+
+#view, create, update and delete student marks
 class StudentsMarks(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        students = Student.objects.all()
-        serializer = StudentMarksSerializer(students, many=True)
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        return [IsAuthenticated()]
+    def get(self, request, id):
+        student_marks = StudentMarks.objects.filter(student_id=id)
+        if not student_marks.exists():
+            return Response({"message": "Student marks not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = StudentMarksSerializer(student_marks, many=True)
         return Response(serializer.data)
-    
+
+
     def post(self, request):
         serializer = StudentMarksSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def put(self, request, id):
+        print(request.data)  # Debugging
         student = get_object_or_404(Student, id=id)
-        serializer = StudentMarksSerializer(student, data=request.data)
+        marks = get_object_or_404(StudentMarks, student=student)
+        serializer = StudentMarksSerializer(marks, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
     def delete(self, request, id):
         student = get_object_or_404(Student, id=id)
-        student.delete()
-        return Response({"message": "Student deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-    
-class StudentMarksDetail(APIView):
-    def get(self, request, id):
-        student = get_object_or_404(Student, id=id)
-        serializer = StudentMarksSerializer(student)
+        marks = get_object_or_404(StudentMarks, student=student)
+        marks.delete()
+        return Response({"message": "Student marks deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+#View student and their marks on deatil based on their id    
+class StudentMarksAll(APIView):
+    def get(self, request):
+        student_marks = StudentMarks.objects.all()
+        serializer = StudentMarksSerializer(student_marks, many=True)
         return Response(serializer.data)

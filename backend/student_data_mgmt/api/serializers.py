@@ -32,6 +32,7 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class StudentMarksSerializer(serializers.ModelSerializer):
+    student = StudentSerializer(read_only = True)
     class Meta:
         model = StudentMarks
         fields = '__all__'
