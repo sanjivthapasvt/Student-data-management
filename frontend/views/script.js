@@ -346,8 +346,43 @@ function handleSearch(searchTerm) {
       card.style.display = 'none';
     }
   });
-<<<<<<< HEAD
 }
-=======
+async function handleCreateStudent(event) {
+  event.preventDefault();
+  const formData = new FormData();
+  const studentName = document.getElementById("studentName").value.trim();
+  const studentRoll = document.getElementById("studentRoll").value.trim();
+  formData.append("name", studentName);
+  formData.append("roll", studentRoll);
+  formData.append("student_class", document.getElementById("studentClass").value);
+  formData.append("section", document.getElementById("studentSection").value);
+  formData.append("address", document.getElementById("studentAddress").value);
+
+  const photoInput = document.getElementById("studentPhoto");
+  if (photoInput.files.length > 0) {
+    formData.append("photo", photoInput.files[0]);
+  }
+
+  try {
+    await studentService.createStudent(formData);
+    document.getElementById("createStudentForm").reset();
+    const modal = bootstrap.Modal.getInstance(document.getElementById("createStudentModal"));
+    if (modal) modal.hide();
+    await loadStudents();
+    alert("Student created successfully");
+
+    // Ensure student data is stored in localStorage
+    if (!studentName || !studentRoll) throw new Error("Name or Roll is empty");
+    let students = JSON.parse(localStorage.getItem("createdStudents")) || [];
+    students.push({ name: studentName, roll: studentRoll });
+    localStorage.setItem("createdStudents", JSON.stringify(students));
+    localStorage.setItem("newStudentCreated", Date.now().toString());
+
+    // Debug logging
+    console.log("Stored student:", { name: studentName, roll: studentRoll });
+    console.log("All students in localStorage:", students);
+  } catch (error) {
+    alert("Error creating student: " + (error.response?.data?.detail || error.message));
+    console.error("Creation error:", error);
+  }
 }
->>>>>>> 51930c360ea3a17d62359a7176893365571b4f0d
