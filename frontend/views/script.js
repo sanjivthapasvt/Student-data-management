@@ -89,6 +89,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("editStudentForm")
     ?.addEventListener("submit", handleEditStudent);
+
+  // Add search input event listener with debouncing
+  const searchInput = document.getElementById('search');
+  let searchTimeout;
+  
+  searchInput?.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      handleSearch(e.target.value);
+    }, 300);
+  });
 });
 
 async function loadStudents() {
@@ -312,4 +323,27 @@ async function handleCreateStudent(event) {
         (error.response?.data?.detail || error.message)
     );
   }
+}
+
+
+//For handeling student search
+function handleSearch(searchTerm) {
+  const studentCards = document.querySelectorAll('.student-card');
+  const searchQuery = searchTerm.toLowerCase();
+  
+  studentCards.forEach(card => {
+    const studentInfo = card.querySelector('.student-info');
+    const name = studentInfo.querySelector('p:nth-child(1)').textContent.toLowerCase();
+    const rollNumber = studentInfo.querySelector('p:nth-child(2)').textContent.toLowerCase();
+    const className = studentInfo.querySelector('p:nth-child(3)').textContent.toLowerCase();
+    
+    // check if student details match search term
+    if (name.includes(searchQuery) || 
+        rollNumber.includes(searchQuery) || 
+        className.includes(searchQuery)) {
+      card.style.display = 'flex';  //display the card
+    } else {
+      card.style.display = 'none';
+    }
+  });
 }
