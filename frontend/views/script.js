@@ -313,3 +313,60 @@ async function handleCreateStudent(event) {
     );
   }
 }
+// Extend StudentService with search method (optional, but reusing getStudents with query param)
+async function searchStudents(query) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      throw new Error("No access token found");
+    }
+    const response = await axios.get(`${studentService.API_URL}students/?search=${encodeURIComponent(query)}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error searching students:", error);
+    throw error;
+  }
+}
+
+// Handle search input
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("studentSearchInput");
+  const container = document.getElementById("studentCardsContainer");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", async (e) => {
+      const query = e.target.value.trim();
+      container.innerHTML = '<div class="text-center">Loading students...</div>';
+
+      try {
+        let students;
+        if (query) {
+          // Fetch filtered students
+          students = await searchStudents(query);
+        } else {
+          // Load all students if search is cleared
+          students = await studentService.getStudents();
+        }
+
+        if (!students || students.length === 0) {
+          container.innerHTML = '<div class="text-center">No students found</div>';
+          return;
+        }
+
+        // Render students with matches at the top
+        container.innerHTML = students
+          .map((student) => createStudentCard(student))
+          .join("");
+      } catch (error) {
+        const errorMessage = error.response?.data?.detail || error.message;
+        container.innerHTML = `<div class="alert alert-danger">Error loading students: ${errorMessage}</div>`;
+        if (error.response?.status === 401) {
+          localStorage.removeItem("accessToken");
+          window.location.href = "sign-in.html";
+        }
+      }
+    });
+  }
+});
