@@ -346,4 +346,8 @@ function handleSearch(searchTerm) {
       card.style.display = 'none';
     }
   });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 51930c360ea3a17d62359a7176893365571b4f0d
