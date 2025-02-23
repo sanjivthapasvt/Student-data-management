@@ -7,6 +7,8 @@ urlpatterns = [
     # URl for student maangement
     path('students/', views.StudentCreate.as_view(), name='student-create'), 
     path('students/<int:id>/', views.StudentDetail.as_view(), name='student-detail'),
+    path('students/marks/', views.StudentsMarks.as_view(), name='students-marks'),
+    path('students/marks/<int:id>/', views.StudentMarksDetail.as_view(), name='students-marks-detail'),
 ]
 # For media file i.e images
 if settings.DEBUG:
