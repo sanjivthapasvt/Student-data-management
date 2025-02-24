@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bitGurkhas - Student Management Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white min-h-screen font-[Poppins]">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center p-6">
+        <div class="flex items-center space-x-2 text-3xl font-extrabold tracking-wide">
+            <span>bit<span id="G" class="text-cyan-300">G</span>urkhas</span>
+        </div>
+
+        <nav>
+            <ul class="flex space-x-8 text-lg">
+                <li><a href="index.html" class="hover:text-cyan-300 transition duration-300">Products</a></li>
+                <li><a href="#" class="hover:text-cyan-300 transition duration-300">Help</a></li>
+            </ul>
+        </nav>
+
+        <div class="flex space-x-4">
+            <a href="../views/sign-up.html"
+                class="bg-blue-600 hover:bg-blue-500 text-white py-2 px-6 rounded-xl shadow-lg transition-transform transform hover:scale-105">Sign
+                Up</a>
+            <a href="../views/sign-in.html"
+                class="bg-white text-blue-900 py-2 px-6 rounded-xl shadow-lg transition-transform transform hover:scale-105">Login</a>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="text-center mt-20 px-4">
+
+        <h1 class="text-6xl font-extrabold leading-tight drop-shadow-lg animate-bounce">
+            Student Management Software
+        </h1>
+        <p class="text-xl mt-6 max-w-3xl mx-auto leading-relaxed">
+            Now you can manage your students with bitGurkhas. It's 100% free for a lifetime with no limitations.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-10 flex justify-center space-x-6">
+            <a href="../views/sign-up.html"
+                class="bg-green-500 hover:bg-green-400 text-white text-xl py-3 px-8 rounded-full shadow-xl transition-transform transform hover:scale-110">Sign
+                Up Now, It's Free</a>
+            <a href="#"
+                class="bg-white text-blue-900 text-xl py-3 px-8 rounded-full shadow-xl transition-transform transform hover:scale-110">Learn
+                More</a>
+        </div>
+
+        <!-- Video Section -->
+        <div class="mt-16">
+            <a href="https://youtube.com/shorts/UVKC_b8MgnU?si=tCuV5m5DX1C6Itm2"
+                class="text-white text-xl transition duration-300 hover:text-cyan-300" target="_blank">
+                ▶ See how it works
+            </a>
+        </div>
+
+        <!-- Floating Image -->
+        <div class="relative mt-16">
+            <img src="../assets/img/dashboard.png" alt="Dashboard View"
+                class="w-3/4 max-w-lg mx-auto rounded-xl shadow-2xl animate-float">
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-6 right-6">
+        <div
+            class="bg-purple-600 hover:bg-purple-500 text-white text-3xl p-4 rounded-full shadow-lg cursor-pointer transition-transform transform hover:scale-125">
+            <a href="form.html">💬</a>
+        </div>
+    </footer>
+
+    <style>
+        /* Custom Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Tailwind Custom Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    </style>
+
+</body>
+</html>
