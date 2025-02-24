@@ -1,104 +1,241 @@
+/* Base body styles with enhanced background and full viewport height */
 body {
     height: 100vh;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-}
-
-.student-card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif; /* More modern font */
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); /* Subtle gradient for depth */
+    overflow-y: auto; /* Ensure scrolling if content exceeds viewport */
+  }
+  
+  /* Student Card - Enhanced with gradient background, shadows, and animations */
+  .student-card {
+    background: linear-gradient(135deg, #ffffff, #f9fafb); /* Gradient background for a modern look */
+    border-radius: 20px; /* Larger, smoother corners */
+    padding: 24px; /* Increased padding for better spacing */
+    margin-bottom: 24px; /* Increased margin for breathing room */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05); /* Enhanced shadow for depth */
     position: relative;
     display: flex;
     align-items: start;
-    gap: 20px;
-}
-
-.student-photo {
-    width: 100px;
-    height: 100px;
+    gap: 24px; /* Increased gap for better spacing */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smooth transition for hover and animation */
+    animation: slideIn 0.8s ease-out; /* Initial slide-in animation for all cards */
+  }
+  
+  /* Hover effect for student card - slight lift and shadow increase */
+  .student-card:hover {
+    transform: translateY(-8px); /* Lift up on hover for interactivity */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
+  }
+  
+  /* Student Photo - Larger, more polished, with animation */
+  .student-photo {
+    width: 120px; /* Larger photo for better visibility */
+    height: 120px; /* Larger photo for better visibility */
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #4a90e2;
-}
-
-.student-info {
+    border: 4px solid #4a90e2; /* Thicker, vibrant border */
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3); /* Subtle shadow for photo */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smooth transition for hover */
+  }
+  
+  /* Hover effect for student photo - slight scale up and glow */
+  .student-photo:hover {
+    transform: scale(1.1); /* Scale up on hover for interactivity */
+    box-shadow: 0 8px 16px rgba(74, 144, 226, 0.5); /* Enhanced glow on hover */
+  }
+  
+  /* Student Info - Improved spacing and typography */
+  .student-info {
     flex-grow: 1;
-}
-
-.student-info p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-.label {
-    font-weight: bold;
-    color: #666;
-    margin-right: 5px;
-}
-
-.student-actions {
     display: flex;
-    gap: 10px;
-}
-
-.edit-btn, .delete-btn {
-    background: none;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Enhanced info paragraphs with animations and colors */
+  .student-info p {
+    margin: 8px 0; /* Increased margin for better readability */
+    font-size: 16px; /* Larger font for readability */
+    color: #374151; /* Darker gray for contrast */
+    transition: color 0.3s ease; /* Smooth color transition */
+    animation: fadeIn 0.6s ease-out; /* Fade-in animation for text */
+  }
+  
+  /* Label styling - bold, colorful, and animated */
+  .label {
+    font-weight: 600; /* Slightly less bold for modern look */
+    color: #4a90e2; /* Vibrant blue for labels */
+    margin-right: 10px; /* Increased margin for spacing */
+    animation: slideRight 0.6s ease-out; /* Slide-in animation for labels */
+  }
+  
+  /* Student Actions - Improved button design and animation */
+  .student-actions {
+    display: flex;
+    gap: 12px; /* Increased gap for better spacing */
+    margin-top: 16px; /* Added margin for separation */
+  }
+  
+  /* Edit and Delete Buttons - Enhanced with gradients, shadows, and animations */
+  .edit-btn, .delete-btn {
+    background: linear-gradient(45deg, #4a90e2, #50c878); /* Gradient for edit button */
     border: none;
-    font-size: 20px;
+    font-size: 18px; /* Slightly larger icon for better visibility */
     cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.edit-btn:hover {
-    background-color: #e3f2fd;
-}
-
-.delete-btn:hover {
-    background-color: #ffebee;
-}
-
-.card {
+    padding: 8px 16px; /* Increased padding for better touch targets */
+    border-radius: 10px; /* Smoother, larger corners */
+    color: white; /* White text for contrast */
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transitions */
+    animation: bounceIn 0.8s ease-out; /* Bounce-in animation for buttons */
+  }
+  
+  .delete-btn {
+    background: linear-gradient(45deg, #e74c3c, #f1c40f); /* Gradient for delete button */
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3); /* Subtle shadow for delete */
+  }
+  
+  /* Hover effects for buttons - scale up and shadow increase */
+  .edit-btn:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    box-shadow: 0 8px 16px rgba(74, 144, 226, 0.5); /* Enhanced shadow on hover */
+    background: linear-gradient(45deg, #357abd, #40c057); /* Darker gradient on hover */
+  }
+  
+  .delete-btn:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    box-shadow: 0 8px 16px rgba(231, 76, 60, 0.5); /* Enhanced shadow on hover */
+    background: linear-gradient(45deg, #c0392b, #d4a017); /* Darker gradient on hover */
+  }
+  
+  /* Card - Enhanced with hover and shadow effects */
+  .card {
     position: relative;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.icon-shape {
-    width: 70px;
-    height: 70px;
-    padding: 5px;
+    background: linear-gradient(135deg, #ffffff, #f9fafb); /* Gradient for consistency */
+    border-radius: 20px; /* Larger, smoother corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05); /* Enhanced shadow */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smooth transitions */
+  }
+  
+  /* Hover effect for card - lift and deeper shadow */
+  .card:hover {
+    transform: translateY(-8px); /* Lift up on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
+  }
+  
+  /* Icon Shape - Enhanced for consistency */
+  .icon-shape {
+    width: 80px; /* Slightly larger for better visibility */
+    height: 80px; /* Slightly larger for better visibility */
+    padding: 8px; /* Increased padding */
     text-align: center;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-}
-
-.card-header {
-    background: transparent;
-    padding: 1.5rem;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-.btn-sm {
-    padding: 0.40rem 0.8rem;
-    font-size: 0.875rem;
-}
-
-.material-symbols-rounded {
-    font-size: 20px;
-}
+    background: linear-gradient(135deg, #4a90e2, #50c878); /* Gradient for icons */
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth transition for hover */
+  }
+  
+  /* Hover effect for icon shape */
+  .icon-shape:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    box-shadow: 0 8px 16px rgba(74, 144, 226, 0.5); /* Enhanced shadow on hover */
+  }
+  
+  /* Card Header and Body - Consistent padding and styling */
+  .card-header, .card-body {
+    padding: 1.75rem; /* Slightly increased padding for better spacing */
+    background: transparent; /* Ensures gradient background shows through */
+  }
+  
+  /* Button Size - Adjusted for consistency */
+  .btn-sm {
+    padding: 0.5rem 1rem; /* Increased padding for better touch targets */
+    font-size: 0.875rem; /* Maintain readability */
+    border-radius: 12px; /* Smoother, larger corners */
+  }
+  
+  /* Material Icons - Enhanced size for better visibility */
+  .material-symbols-rounded {
+    font-size: 24px; /* Larger icons for clarity */
+    transition: color 0.3s ease; /* Smooth color transition */
+  }
+  
+  /* Animations - Smooth, modern entrance effects */
+  @keyframes slideIn {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes slideRight {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  
+  /* Responsive Design - Ensure cards look great on all devices */
+  @media (max-width: 768px) {
+    .student-card {
+      flex-direction: column; /* Stack on mobile */
+      align-items: center;
+      padding: 16px; /* Reduced padding for mobile */
+    }
+  
+    .student-photo {
+      width: 80px; /* Smaller photo on mobile */
+      height: 80px; /* Smaller photo on mobile */
+    }
+  
+    .student-info p {
+      font-size: 14px; /* Smaller text on mobile */
+    }
+  
+    .student-actions {
+      flex-direction: column; /* Stack buttons on mobile */
+      gap: 8px; /* Reduced gap on mobile */
+    }
+  
+    .edit-btn, .delete-btn {
+      width: 100%; /* Full width buttons on mobile */
+      padding: 8px 0; /* Adjusted padding for mobile */
+    }
+  
+    .card, .student-card {
+      margin-bottom: 16px; /* Reduced margin for mobile */
+    }
+  
+    .grid-cols-3 {
+      grid-template-columns: 1fr; /* Single column on mobile */
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .student-card {
+      padding: 20px; /* Adjusted padding for tablets */
+    }
+  
+    .student-photo {
+      width: 100px; /* Medium photo for tablets */
+      height: 100px; /* Medium photo for tablets */
+    }
+  
+    .student-info p {
+      font-size: 15px; /* Slightly smaller text for tablets */
+    }
+  
+    .grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr); /* Two columns on tablets */
+    }
+  }
