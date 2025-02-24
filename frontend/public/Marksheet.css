@@ -22,6 +22,14 @@
   text-align: center !important;
 }
 
+.table td:first-child {
+  padding-left: 1.5rem !important;
+}
+
+.table th:first-child {
+  padding-left: 2rem !important;
+}
+
 /* Dropdown for student search */
 .student-dropdown {
   position: absolute;
