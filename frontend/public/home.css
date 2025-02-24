@@ -1,0 +1,77 @@
+/* Main Content Styling */
+.main-content {
+    margin-left: 260px; /* Adjust for sidebar */
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    min-height: 100vh;
+    transition: margin-left 0.3s ease-in-out;
+    border-radius: 15px;
+  }
+  
+  @media (max-width: 1200px) {
+    .main-content {
+      margin-left: 220px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .main-content {
+      margin-left: 0;
+    }
+  }
+  
+  /* Header Styling */
+  .w-full.bg-gradient-to-r {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Cards Styling */
+  .p-6.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding-top: 20px;
+  }
+  
+  .bg-white.p-6.shadow-lg.rounded-xl {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .bg-white.p-6.shadow-lg.rounded-xl:hover {
+    transform: translateY(-5px);
+  }
+  
+  .text-lg.font-semibold {
+    color: #495057;
+  }
+  
+  .text-5xl.font-bold {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  /* Different colors for different cards */
+  .text-red-500 { color: #ff4757; }
+  .text-blue-500 { color: #1e90ff; }
+  .text-gray-700 { color: #343a40; }
+  
+  /* Chart Container */
+  #admissionRatioChart {
+    width: 100% !important;
+    height: 350px !important;
+    max-width: 600px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  
