@@ -1,10 +1,16 @@
-// Constants
+/**
+ * Base configuration and authentication
+ */
 const API_BASE_URL = "http://localhost:8000/api";
 const AUTH_HEADER = () => ({
   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 });
 
-// Utility functions
+/**
+ * Utility Functions
+ */
+
+// Handles API errors and returns formatted error messages
 const handleApiError = (error, defaultMessage = "An error occurred") => {
   const errorMessage =
     error.response?.data?.detail || error.message || defaultMessage;
@@ -12,6 +18,7 @@ const handleApiError = (error, defaultMessage = "An error occurred") => {
   return errorMessage;
 };
 
+// Calculates the average marks across all subjects
 const calculateAverage = (marks) => {
   const subjects = ["DSA", "Java", "SAD", "Web_technology", "Prob_and_Stats"];
   const total = subjects.reduce(
@@ -21,8 +28,12 @@ const calculateAverage = (marks) => {
   return (total / subjects.length).toFixed(2);
 };
 
-// API functions
+/**
+ * API Integration Methods
+ * Handles all CRUD operations with the backend
+ */
 const api = {
+  // Fetches marks for all students or a specific student
   async getMarks(studentId = "") {
     try {
       const url = `${API_BASE_URL}/students/marks/${studentId}`.replace(
@@ -36,6 +47,7 @@ const api = {
     }
   },
 
+  // Creates new marks entry for a student
   async createMarks(marksData) {
     try {
       const response = await axios.post(
@@ -50,6 +62,7 @@ const api = {
     }
   },
 
+  // Updates existing marks for a student
   async updateMarks(studentId, marksData) {
     try {
       const response = await axios.put(
@@ -63,6 +76,7 @@ const api = {
     }
   },
 
+  // Deletes marks for a specific student
   async deleteMarks(studentId) {
     try {
       await axios.delete(`${API_BASE_URL}/students/marks/${studentId}/`, {
@@ -73,6 +87,7 @@ const api = {
     }
   },
 
+  // Fetches list of all students
   async getStudents() {
     try {
       const response = await axios.get(`${API_BASE_URL}/students/`, {
@@ -85,17 +100,22 @@ const api = {
   },
 };
 
-// DOM Manipulation functions
+/**
+ * DOM Manipulation Helper Functions
+ * Centralizes all DOM-related operations
+ */
 const dom = {
+  // Shorthand for getElementById
   getElement: (id) => document.getElementById(id),
 
+  // Generates HTML for table rows
   createTableRow: (mark) => `
         <tr data-student-id="${mark.student.id}">
             <td>
                 <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">${mark.student.name}</h6>
-                        <p class="text-xs text-secondary mb-0">Roll: ${mark.student.roll}</p>
+                        <h6 class="mb-0 text-sm ">${mark.student.name}</h6>
+                        <p class="text-xs text-secondary mb-0 ">Roll: ${mark.student.roll}</p>
                     </div>
                 </div>
             </td>
@@ -116,6 +136,7 @@ const dom = {
         </tr>
     `,
 
+  // Displays error messages in the table
   showError: (message) => {
     const tableBody = dom.getElement("marksheetTableBody");
     tableBody.innerHTML = `
@@ -126,7 +147,10 @@ const dom = {
   },
 };
 
-// Main functionality
+/**
+ * Main Application Class
+ * Manages all marksheet operations and UI interactions
+ */
 class MarksManager {
   constructor() {
     this.modal = null;
@@ -134,6 +158,9 @@ class MarksManager {
     this.loadMarks();
   }
 
+  /**
+   * Fetches and displays all marks in the table
+   */
   async loadMarks() {
     try {
       const marks = await api.getMarks();
@@ -145,7 +172,10 @@ class MarksManager {
       dom.showError(error.message);
     }
   }
-  // New method to fetch all students and populate the dropdown
+
+  /**
+   * Populates student dropdown with all available students
+   */
   async loadStudentsDropdown() {
     try {
       const students = await api.getStudents();
@@ -167,6 +197,11 @@ class MarksManager {
       alert(error.message);
     }
   }
+
+  /**
+   * Sets up all event listeners for the application
+   * Includes: form submission, search, modal interactions
+   */
   setupEventListeners() {
     // Add new marks button
     const addButton = `
@@ -206,8 +241,34 @@ class MarksManager {
     dom
       .getElement("search")
       .addEventListener("input", (e) => this.handleSearch(e));
+
+    // Add input event listeners for is-filled class
+    document.querySelectorAll('.input-group input').forEach(input => {
+      input.addEventListener('focus', (e) => {
+          e.target.closest('.input-group').classList.add('is-filled');
+      });
+
+      input.addEventListener('blur', (e) => {
+          if (!e.target.value) {
+              e.target.closest('.input-group').classList.remove('is-filled');
+          }
+      });
+
+      input.addEventListener('input', (e) => {
+          const group = e.target.closest('.input-group');
+          if (e.target.value) {
+              group.classList.add('is-filled');
+          } else {
+              group.classList.remove('is-filled');
+          }
+      });
+    });
   }
 
+  /**
+   * Handles form submission for both creating and updating marks
+   * @param {Event} e - Form submission event
+   */
   async handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -241,6 +302,10 @@ class MarksManager {
     }
   }
 
+  /**
+   * Implements search functionality across student names and roll numbers
+   * @param {Event} e - Input event from search field
+   */
   handleSearch(e) {
     const searchTerm = e.target.value.toLowerCase();
     const rows = document.querySelectorAll("#marksheetTableBody tr");
@@ -258,6 +323,10 @@ class MarksManager {
     });
   }
 
+  /**
+   * Prepares and shows modal for creating new marks
+   * Resets form and loads student dropdown
+   */
   createMarks() {
     dom.getElement("marksModalLabel").textContent = "Add New Marks";
 
@@ -269,14 +338,21 @@ class MarksManager {
     dom.getElement("studentSelectGroup").style.display = "";
     dom.getElement("studentInfoGroup").style.display = "none";
 
+    // Remove is-filled class from all input groups
+    document.querySelectorAll('.input-group').forEach(group => {
+        group.classList.remove('is-filled');
+    });
+
     // Load the dropdown with all students
     this.loadStudentsDropdown();
-
-    // Show the modal
 
     this.modal.show();
   }
 
+  /**
+   * Loads and displays existing marks for editing
+   * @param {string} studentId - ID of student whose marks are being edited
+   */
   async editMarks(studentId) {
     try {
         const marksData = await api.getMarks(studentId);
@@ -296,6 +372,14 @@ class MarksManager {
         dom.getElement('webTech').value = marks.Web_technology;
         dom.getElement('probStats').value = marks.Prob_and_Stats;
 
+        // Add is-filled class to all input groups with values
+        document.querySelectorAll('.input-group').forEach(group => {
+            const input = group.querySelector('input');
+            if (input && input.value) {
+                group.classList.add('is-filled');
+            }
+        });
+
         // Hide dropdown, show read-only info
         dom.getElement('studentSelectGroup').style.display = 'none';
         dom.getElement('studentInfoGroup').style.display = '';
@@ -307,8 +391,10 @@ class MarksManager {
     }
 }
   
-  
-
+  /**
+   * Handles mark deletion with confirmation
+   * @param {string} studentId - ID of student whose marks are being deleted
+   */
   async deleteMarks(studentId) {
     if (confirm("Are you sure you want to delete these marks?")) {
       try {
