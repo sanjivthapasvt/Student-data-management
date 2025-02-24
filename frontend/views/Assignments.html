@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/assignment.css" />
+    <script src="../components/loadHead.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="navbar"></div><br><br>
+    <div class="container">
+      <h2>Assignment Dashboard</h2>
+      <div class="progress-section">
+        <p id="progress-text">0/5 students have turned in assignment</p>
+        <div class="progress-bar">
+          <div class="progress"></div>
+        </div>
+        <div class="button-group">
+          <button class="btn" onclick="viewClassReports()">
+            View Class Reports
+          </button>
+          <button class="btn" onclick="downloadAssignmentReport()">
+            Download Assignment Report
+          </button>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <button class="btn download-draft-btn" onclick="downloadCurrentDraft()">
+          Download Current Draft
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="select-all" /></th>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>DSA</th>
+              <th>STATISTICS</th>
+              <th>JAVA</th>
+              <th>SAD</th>
+              <th>WEB TECHNOLOGY</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="assignment-data">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="../components/loadNavbar.js"></script>
+
+    <script src="../assets/js/assignment.js"></script>
+  </body>
+</html>
