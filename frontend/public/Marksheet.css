@@ -1,0 +1,50 @@
+.table th {
+  padding: 12px 8px !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+.table td {
+  padding: 12px 8px !important;
+  vertical-align: middle !important;
+}
+
+.table td p {
+  margin: 0 !important;
+}
+
+.table button {
+  margin: 0 4px !important;
+}
+
+.table th.text-center, 
+.table td.text-center {
+  text-align: center !important;
+}
+
+/* Dropdown for student search */
+.student-dropdown {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  z-index: 1000;
+  margin-top: 2px;
+}
+
+.student-option {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.student-option:hover {
+  background-color: #f8f9fa;
+}
+
+.selected-student {
+  margin-top: 10px;
+}
