@@ -1,4 +1,5 @@
 node_modules/
 dist/
 .env
-db.sqlite3
+backend/student_data_mgmt/student_data_mgmt/db.sqlite3
+backend/student_data_mgmt/student_data_mgmt/__pycache__/
