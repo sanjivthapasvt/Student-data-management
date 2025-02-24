@@ -126,8 +126,125 @@
     </nav>
     <!-- End Navbar -->
 
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Students Marksheet</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 20%; padding-left: 1.5rem;">Student</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">DSA</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">Java</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">SAD</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">Web Technology</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">Prob & Stats</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 10%;">Percentage</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 20%;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="marksheetTableBody">
+                    <!-- Table rows will be dynamically inserted here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="modal fade" id="marksModal" tabindex="-1" role="dialog" aria-labelledby="marksModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="marksModalLabel">Add/Edit Marks</h5>
+            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="marksForm">
+            <input type="hidden" id="studentId">
+            <div class="modal-body">
+                <!-- Student selector for new marks -->
+                <div class="input-group input-group-outline my-3" id="studentSelectGroup">
+                    <select class="form-control" id="studentSelect">
+                        <option value="">-- Select a Student --</option>
+                    </select>
+                </div>
+                
+                <!-- Read-only student info for editing -->
+                <div class="input-group input-group-outline my-3" id="studentInfoGroup" style="display: none;">
+                    <input type="text" class="form-control" id="studentInfo" readonly>
+                </div>
 
+                <!-- Marks inputs -->
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">DSA</label>
+                    <input type="number" 
+                           min="0" 
+                           max="100" 
+                           step="0.01" 
+                           class="form-control" 
+                           id="dsa" 
+                           required>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Java</label>
+                    <input type="number" 
+                           min="0" 
+                           max="100" 
+                           step="0.01" 
+                           class="form-control" 
+                           id="java" 
+                           required>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">SAD</label>
+                    <input type="number" 
+                           min="0" 
+                           max="100" 
+                           step="0.01" 
+                           class="form-control" 
+                           id="sad" 
+                           required>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Web Technology</label>
+                    <input type="number" 
+                           min="0" 
+                           max="100" 
+                           step="0.01" 
+                           class="form-control" 
+                           id="webTech" 
+                           required>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Prob & Stats</label>
+                    <input type="number" 
+                           min="0" 
+                           max="100" 
+                           step="0.01" 
+                           class="form-control" 
+                           id="probStats" 
+                           required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
   <!-- Core JS Files -->
   <script src="../assets/js/core/popper.min.js"></script>
@@ -148,23 +265,14 @@
   <script src="./script.js"></script>
 
   <script>
-    // Logout functionality (unchanged)
     document.getElementById('logout-btn').addEventListener('click', async (e) => {
       e.preventDefault();
-      try {
-        const response = await axios.post('/logout/', {
-          refresh_token: localStorage.getItem('refresh_token')
-        }, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
-        });
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        window.location.href = 'sign-in.html';
-      } catch (error) {
-        console.error('Logout failed:', error);
-        alert('Logout failed. Please try again.');
-      }
+      const authService = require('../services/auth');
+      authService.logout();
+      window.location.href = 'sign-in.html';
     });
   </script>
+  <script src="../public/JS/Marksheet.js"></script>
+
 </body>
 </html>

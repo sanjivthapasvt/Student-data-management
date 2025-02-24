@@ -4,14 +4,12 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, serializers
 from .serializers import UserSerializer, StudentSerializer, StudentMarksSerializer
 from .models import Student, StudentMarks
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
-
-#For authentication created Register, Login and Logout views
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     
@@ -62,20 +60,19 @@ class LogoutView(APIView):
     def post(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
-            if refresh_token:
-                token = RefreshToken(refresh_token)
-                token.blacklist()
-            return Response({
-                "message": "Successfully logged out"
-            }, status=status.HTTP_200_OK)
+            if not refresh_token:
+                return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
         except Exception as e:
-            # Still return success even if token blacklisting fails
             return Response({
-                "message": "Logged out"
+                "message": "Logged out",
+                "error": str(e)
             }, status=status.HTTP_200_OK)
             
 class StudentCreate(APIView):
-    permission_classes = [IsAuthenticated]  # Only authenticated users can add students
+    permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
     def post(self, request):
@@ -91,23 +88,17 @@ class StudentCreate(APIView):
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
 
-
 class StudentDetail(APIView):
-
     def get_permissions(self):
-        # Allow GET requests without authentication
         if self.request.method == 'GET':
             return []
-        # Require authentication for PUT and DELETE
         return [IsAuthenticated()]
 
-    # Retrieve a student (GET request)
     def get(self, request, id):
         student = get_object_or_404(Student, id=id)
         serializer = StudentSerializer(student)
         return Response(serializer.data)
 
-    # Update a student (PUT request)
     def put(self, request, id):
         student = get_object_or_404(Student, id=id)
         serializer = StudentSerializer(student, data=request.data)
@@ -116,54 +107,53 @@ class StudentDetail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # Delete a student (DELETE request)
     def delete(self, request, id):
         student = get_object_or_404(Student, id=id)
         student.delete()
         return Response({"message": "Student deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
-#view, create, update and delete student marks
 class StudentsMarks(APIView):
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
         return [IsAuthenticated()]
-    def get(self, request, id):
-        student_marks = StudentMarks.objects.filter(student_id=id)
-        if not student_marks.exists():
-            return Response({"message": "Student marks not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, id=None):
+        if id:
+            student_marks = StudentMarks.objects.filter(student_id=id)
+            if not student_marks.exists():
+                return Response({"message": "Student marks not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            student_marks = StudentMarks.objects.all()
         serializer = StudentMarksSerializer(student_marks, many=True)
         return Response(serializer.data)
 
-
     def post(self, request):
+        # Create new student marks
         serializer = StudentMarksSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Return the created marks with student details
+            created_marks = StudentMarks.objects.get(id=serializer.data['id'])
+            response_serializer = StudentMarksSerializer(created_marks)
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, id):
-        print(request.data)  # Debugging
-        student = get_object_or_404(Student, id=id)
-        marks = get_object_or_404(StudentMarks, student=student)
-        serializer = StudentMarksSerializer(marks, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        try:
+            marks = StudentMarks.objects.get(student_id=id)
+            serializer = StudentMarksSerializer(marks, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except StudentMarks.DoesNotExist:
+            return Response({"error": "Marks not found"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, id):
-        student = get_object_or_404(Student, id=id)
-        marks = get_object_or_404(StudentMarks, student=student)
-        marks.delete()
-        return Response({"message": "Student marks deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-
-
-#View student and their marks on deatil based on their id    
-class StudentMarksAll(APIView):
-    def get(self, request):
-        student_marks = StudentMarks.objects.all()
-        serializer = StudentMarksSerializer(student_marks, many=True)
-        return Response(serializer.data)
+        try:
+            marks = StudentMarks.objects.get(student_id=id)
+            marks.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except StudentMarks.DoesNotExist:
+            return Response({"error": "Marks not found"}, status=status.HTTP_404_NOT_FOUND)
