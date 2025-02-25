@@ -10,6 +10,7 @@ from .models import Student, StudentMarks
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
+#View for registering a new user
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     
@@ -27,6 +28,7 @@ class RegisterView(APIView):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#view for login
 class LoginView(APIView):
     permission_classes = [AllowAny]
     
@@ -54,6 +56,7 @@ class LoginView(APIView):
             "error": "Invalid credentials"
         }, status=status.HTTP_401_UNAUTHORIZED)
 
+#view to logout
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -70,7 +73,8 @@ class LogoutView(APIView):
                 "message": "Logged out",
                 "error": str(e)
             }, status=status.HTTP_200_OK)
-            
+
+#view to create and list student
 class StudentCreate(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
@@ -88,6 +92,7 @@ class StudentCreate(APIView):
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
 
+#view to get, update and delete student
 class StudentDetail(APIView):
     def get_permissions(self):
         if self.request.method == 'GET':
@@ -112,6 +117,7 @@ class StudentDetail(APIView):
         student.delete()
         return Response({"message": "Student deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
+#view to get, create, upadte and delete student marks
 class StudentsMarks(APIView):
     def get_permissions(self):
         if self.request.method == 'GET':

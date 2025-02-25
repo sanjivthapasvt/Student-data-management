@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import pandas as pd
