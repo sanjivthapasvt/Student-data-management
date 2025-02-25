@@ -4,13 +4,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Attendance</title>
+  <title>Extract Data</title>
   <script src="../components/loadHead.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios for API calls -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../public/Attendance.css">
+  <style>
+    /* Identity card styling */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+    }
+
+    .identity-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .identity-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .identity-card h3 {
+      margin: 10px 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .identity-card p {
+      margin: 5px 0;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .identity-card .marks {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .identity-card .photo-upload {
+      margin-top: 10px;
+    }
+
+    .identity-card input[type="file"] {
+      font-size: 0.8em;
+      margin-top: 5px;
+    }
+
+    /* Upload section */
+    .upload-section {
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+  <!-- Navigation (unchanged, on left, with updated Extract icon) -->
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -41,7 +102,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active bg-gradient-dark text-white" href="Attendance.html">
+          <a class="nav-link text-dark" href="Attendance.html">
             <i class="material-symbols-rounded opacity-5">check_circle</i>
             <span class="nav-link-text ms-1">Attendance</span>
           </a>
@@ -53,8 +114,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="Extract.html">
-            <i class="material-symbols-rounded opacity-5">notifications</i>
+          <a class="nav-link active bg-gradient-dark text-white" href="Extract.html">
+            <i class="material-symbols-rounded opacity-5">Files</i> <!-- Updated icon -->
             <span class="nav-link-text ms-1">Extract</span>
           </a>
         </li>
@@ -82,13 +143,15 @@
       </div>
     </div>
   </aside>
+
+  <!-- Main Content -->
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Attendance</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Extract</li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -125,33 +188,108 @@
     </nav>
     <!-- End Navbar -->
 
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <input type="file" id="excelFile" accept=".xlsx,.xls">
+      <button onclick="uploadFile()">Upload Excel</button>
+    </div>
 
+    <!-- Extracted Data Display -->
+    <div class="card-container" id="result"></div>
 
-  <!-- Core JS Files -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script>
-    let win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      let options = { damping: '0.5' };
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="../assets/js/material-dashboard.min.js"></script>
-  <script src="./script.js"></script>
+    <!-- Core JS Files -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script>
+      let win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        let options = { damping: '0.5' };
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="../assets/js/material-dashboard.min.js"></script>
+    <script src="./script.js"></script>
 
-  <script>
-    document.getElementById('logout-btn').addEventListener('click', async (e) => {
-      e.preventDefault();
-      const authService = require('../services/auth');
-      authService.logout();
-      window.location.href = 'sign-in.html';
-    });
-  </script>
+    <!-- Upload and Display Logic -->
+    <script>
+      async function uploadFile() {
+        const fileInput = document.getElementById('excelFile');
+        const formData = new FormData();
+        formData.append('excelFile', fileInput.files[0]);
+
+        try {
+          const response = await fetch('http://localhost:8000/api/process-excel/', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await response.json();
+
+          // Clear previous results
+          const container = document.getElementById('result');
+          container.innerHTML = '';
+
+          // Create identity cards
+          data.rows.forEach((row, index) => {
+            const card = document.createElement('div');
+            card.className = 'identity-card';
+
+            // Photo (placeholder or from Excel if URL provided)
+            const img = document.createElement('img');
+            img.id = `photo-${index}`;
+            img.src = row.photo || 'https://via.placeholder.com/100';
+            card.appendChild(img);
+
+            // Student details
+            card.innerHTML += `
+              <h3>${row.name}</h3>
+              <p>Roll: ${row.roll}</p>
+              <p>Class: ${row.student_class}</p>
+              <p>Section: ${row.section}</p>
+              <p>Address: ${row.address}</p>
+              <p class="marks">Marks: ${row.marks}</p>
+            `;
+
+            // Photo upload input
+            const photoUpload = document.createElement('div');
+            photoUpload.className = 'photo-upload';
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.id = `upload-${index}`;
+            input.onchange = function() {
+              const file = this.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                  document.getElementById(`photo-${index}`).src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+              }
+            };
+            photoUpload.appendChild(input);
+            card.appendChild(photoUpload);
+
+            container.appendChild(card);
+          });
+        } catch (error) {
+          console.error('Error:', error);
+          document.getElementById('result').innerHTML = 'Error: ' + error.message;
+        }
+      }
+
+      // Logout functionality (unchanged)
+      document.getElementById('logout-btn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const authService = require('../services/auth');
+        authService.logout();
+        window.location.href = 'sign-in.html';
+      });
+    </script>
+  </main>
 </body>
 </html>
