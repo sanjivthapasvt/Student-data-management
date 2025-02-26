@@ -267,5 +267,103 @@
       window.location.href = 'sign-in.html';
     });
   </script>
+  <script>
+    // Load existing students from localStorage or initialize an empty array
+    let students = JSON.parse(localStorage.getItem('students')) || [];
+  
+    // Function to save students to localStorage
+    function saveStudents() {
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+  
+    // Function to render a student card
+    function renderStudentCard(student) {
+      const container = document.getElementById('studentCardsContainer');
+      if (!container) {
+        console.error("Error: 'studentCardsContainer' element not found in the DOM.");
+        return;
+      }
+      const card = `
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">${student.name}</h5>
+            <p class="card-text">Roll: ${student.roll}</p>
+            <p class="card-text">Class: ${student.class.toUpperCase()}</p>
+            <p class="card-text">Address: ${student.address}</p>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', card);
+    }
+  
+    // Handle form submission for creating a new student
+    function handleFormSubmit(e) {
+      e.preventDefault();
+  
+      const studentName = document.getElementById('studentName');
+      const studentRoll = document.getElementById('studentRoll');
+      const studentClass = document.getElementById('studentClass');
+      const studentSection = document.getElementById('studentSection');
+      const studentAddress = document.getElementById('studentAddress');
+      const studentPhoto = document.getElementById('studentPhoto');
+  
+      // Check if all required elements exist
+      if (!studentName || !studentRoll || !studentClass || !studentAddress) {
+        console.error("Error: One or more form elements not found.");
+        return;
+      }
+  
+      const newStudent = {
+        name: studentName.value,
+        roll: studentRoll.value,
+        class: studentClass.value.toLowerCase(), // Normalize to lowercase for consistency
+        section: studentSection.value,
+        address: studentAddress.value,
+        photo: studentPhoto && studentPhoto.files[0] ? URL.createObjectURL(studentPhoto.files[0]) : null
+      };
+  
+      // Add the new student to the array
+      students.push(newStudent);
+      saveStudents();
+  
+      // Render the new student card
+      renderStudentCard(newStudent);
+  
+      // Reset the form
+      document.getElementById('createStudentForm').reset();
+  
+      // Close the modal (with fallback if Bootstrap fails)
+      const modalElement = document.getElementById('createStudentModal');
+      if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+          modal.hide();
+        } else {
+          console.warn("Bootstrap Modal instance not found, hiding manually.");
+          modalElement.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) backdrop.remove();
+        }
+      } else {
+        console.error("Bootstrap not loaded, cannot close modal programmatically.");
+      }
+    }
+  
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('createStudentForm');
+      if (!form) {
+        console.error("Error: 'createStudentForm' not found in the DOM.");
+        return;
+      }
+  
+      // Attach the form submission handler
+      form.addEventListener('submit', handleFormSubmit);
+  
+      // Load and render existing students
+      students.forEach(renderStudentCard);
+    });
+  </script>
 </body>
 </html>
