@@ -47,30 +47,30 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" href="../views/Marksheet.html">
-              <i class="material-symbols-rounded opacity-5">grading</i>
-              <span class="nav-link-text ms-1">Marksheet</span>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link text-dark" href="Extract.html">
               <i class="material-symbols-rounded opacity-5">Files</i>
               <span class="nav-link-text ms-1">Extract</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="Notifications.html">
+              <i class="material-symbols-rounded opacity-5">notifications</i>
+              <span class="nav-link-text ms-1">Notifications</span>
             </a>
           </li>
           <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account</h6>
           </li>
           <li class="nav-item">
-            <a class="nav-link active bg-gradient-dark text-white" href="profile.html">
+            <a class="nav-link text-dark" href="profile.html">
               <i class="material-symbols-rounded opacity-5">person</i>
               <span class="nav-link-text ms-1">Profile</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" href="./UserManagement.html">
+            <a class="nav-link active bg-gradient-dark text-white" href="profile.html">
               <i class="material-symbols-rounded opacity-5">person</i>
-              <span class="nav-link-text ms-1">User Management</span>
+              <span class="nav-link-text ms-1">User-Management</span>
             </a>
           </li>
           <li class="nav-item">
@@ -95,7 +95,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page"> Marksheet</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">USER MANAGEMENT</li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -132,6 +132,113 @@
     </nav>
     <!-- End Navbar -->
 
+    <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="card my-4">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                  <h6 class="text-white text-capitalize ps-3">User List</h6>
+                </div>
+              </div>
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 20%; padding-left: 1.5rem;">Username</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 12%;">First Name</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 12%;">Last Name</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 12%;">Email ADDRESS</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 12%;">Group</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 12%;">Status</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 20%;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                      <!-- Table rows will be dynamically inserted here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userModalLabel">Add/Edit User</h5>
+              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="userForm">
+              <input type="hidden" id="userId">
+              <div class="modal-body">
+                  <input type="hidden" id="studentId">
+                  <!-- User inputs -->
+                  <div class="input-group input-group-outline my-3">
+                      <label class="form-label">Username</label>
+                      <input type="text" 
+                             class="form-control" 
+                             id="username" 
+                             required>
+                  </div>
+                  <div class="input-group input-group-outline my-3">
+                      <label class="form-label">First Name</label>
+                      <input type="text" 
+                             class="form-control" 
+                             id="firstname" 
+                             required>
+                  </div>
+                  <div class="input-group input-group-outline my-3">
+                      <label class="form-label">Last Name</label>
+                      <input type="text" 
+                             class="form-control" 
+                             id="lastname" 
+                             required>
+                  </div>
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" 
+                           class="form-control" 
+                           id="emailaddress" 
+                           required>
+                </div>
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" 
+                           class="form-control" 
+                           id="password" 
+                           required>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" 
+                           class="form-control" 
+                           id="confirmpassword" 
+                           required>
+                </div>
+                  <!-- Group selector for new user -->
+                  <div class="input-group input-group-outline my-3" id="userSelectGroup">
+                    <select class="form-control" id="userSelect">
+                        <option value="">-- Select a Group --</option>
+                    </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
 
 
   <!-- Core JS Files -->
@@ -151,6 +258,7 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="../assets/js/material-dashboard.min.js"></script>
   <script src="./script.js"></script>
+  <script src="../public/JS/UserManagement.js"></script>
 
   <script>
     document.getElementById('logout-btn').addEventListener('click', async (e) => {
