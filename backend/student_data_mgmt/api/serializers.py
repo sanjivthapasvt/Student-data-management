@@ -1,22 +1,15 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Student, StudentMarks, User
+from .models import Student, StudentMarks
 
-#serializer for user
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'group', 'status')
-        read_only_field = ['id']
-
-class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=6)
     confirm_password = serializers.CharField(write_only=True)
     email = serializers.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'group', 'status', 'password', 'confirm_password')
-        read_only_field = ['id']
+        fields = ('id', 'username', 'email', 'password', 'confirm_password')
 
     def validate(self, data):
         if data['password'] != data['confirm_password']:
