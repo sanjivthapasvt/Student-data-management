@@ -2,28 +2,6 @@ from django.db import models
 import os
 from decimal import Decimal
 from django.core.validators import MinValueValidator
-from django.contrib.auth.models import AbstractUser
-
-
-#Class for users
-class User(AbstractUser):
-    GROUP_CHOICES = (
-        ('admin', 'Admin'),
-        ('teacher', 'Teacher'),
-        ('student', 'Student'),
-    )
-    STATUS_CHOICES = (
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-        ('suspended', 'Suspended'),
-    )
-    
-    groups = models.CharField(max_length=20, choices=GROUP_CHOICES, default='student')
-    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='active')
-    
-    def __str__(self):
-        return self.username
-
 
 # Class for defining the student model
 class Student(models.Model):
