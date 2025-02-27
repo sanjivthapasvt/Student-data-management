@@ -37,11 +37,9 @@ const api = {
   // Creates a new user
   async createUser(userData) {
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/users/`,
-        userData,
-        { headers: AUTH_HEADER() }
-      );
+      const response = await axios.post(`${API_BASE_URL}/users/`, userData, {
+        headers: AUTH_HEADER(),
+      });
       return response.data;
     } catch (error) {
       const errorMessage = error.response?.data?.detail || error.message;
@@ -101,32 +99,32 @@ const dom = {
     const getGroupName = (user) => {
       // Check if the user has groups and it's an array with items
       if (user.groups && Array.isArray(user.groups) && user.groups.length > 0) {
-        return user.groups[0].name || 'Unknown';
+        return user.groups[0].name || "Unknown";
       }
-      
+
       // Fallback to the old group_ids approach if present
       if (user.group_ids && user.group_ids.length > 0) {
         const groups = {
-          1: 'Admin',
-          2: 'Teacher',
-          3: 'Student'
+          1: "Admin",
+          2: "Teacher",
+          3: "Student",
         };
-        return groups[user.group_ids[0]] || 'Unknown';
+        return groups[user.group_ids[0]] || "Unknown";
       }
-      
-      return 'Unknown';
+
+      return "Unknown";
     };
 
     // Convert is_active to a readable status
     const getStatus = (isActive) => {
-      if (isActive === undefined || isActive === null) return 'Unknown';
-      return isActive ? 'Active' : 'Inactive';
+      if (isActive === undefined || isActive === null) return "Unknown";
+      return isActive ? "Active" : "Inactive";
     };
 
     // Determine status class for coloring
     const getStatusClass = (isActive) => {
-      if (isActive === undefined || isActive === null) return '';
-      return isActive ? 'text-success' : 'text-danger';
+      if (isActive === undefined || isActive === null) return "";
+      return isActive ? "text-success" : "text-danger";
     };
 
     return `
@@ -139,11 +137,21 @@ const dom = {
             </div>
           </div>
         </td>
-        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${user.first_name || '-'}</p></td>
-        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${user.last_name || '-'}</p></td>
-        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${user.email || '-'}</p></td>
-        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${getGroupName(user)}</p></td>
-        <td class="text-center"><p class="text-xs font-weight-bold mb-0 ${getStatusClass(user.is_active)}">${getStatus(user.is_active)}</p></td>
+        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${
+          user.first_name || "-"
+        }</p></td>
+        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${
+          user.last_name || "-"
+        }</p></td>
+        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${
+          user.email || "-"
+        }</p></td>
+        <td class="text-center"><p class="text-xs font-weight-bold mb-0">${getGroupName(
+          user
+        )}</p></td>
+        <td class="text-center"><p class="text-xs font-weight-bold mb-0 ${getStatusClass(
+          user.is_active
+        )}">${getStatus(user.is_active)}</p></td>
         <td class="text-center">
           <button class="btn btn-link text-secondary mb-0 edit-user-btn">
             <i class="material-symbols-rounded text-sm me-2">edit</i>Edit
@@ -177,10 +185,12 @@ class UserManager {
     this.modal = null;
     this.setupEventListeners();
     this.loadUsers();
-    
+
     // Initialize modal after DOM is fully loaded
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => this.initializeModal());
+      document.addEventListener("DOMContentLoaded", () =>
+        this.initializeModal()
+      );
     } else {
       this.initializeModal();
     }
@@ -203,12 +213,12 @@ class UserManager {
     try {
       const users = await api.getUsers();
       const tableBody = dom.getElement("userTableBody");
-      
+
       if (!tableBody) {
         console.error("User table body element not found");
         return;
       }
-      
+
       if (users.length === 0) {
         tableBody.innerHTML = `
           <tr>
@@ -217,7 +227,7 @@ class UserManager {
         `;
         return;
       }
-      
+
       tableBody.innerHTML = users
         .map((user) => dom.createTableRow(user))
         .join("");
@@ -243,7 +253,7 @@ class UserManager {
         </div>
       `;
       containerRow.insertAdjacentHTML("afterbegin", addButton);
-      
+
       // Add User button click handler
       const addUserBtn = dom.getElement("addUserBtn");
       if (addUserBtn) {
@@ -288,14 +298,14 @@ class UserManager {
     e.preventDefault();
     const form = e.target;
     const userIdElement = dom.getElement("userId");
-    
+
     if (!userIdElement) {
       console.error("User ID element not found");
       return;
     }
-    
+
     const userId = userIdElement.value;
-    
+
     try {
       // Check if passwords match for new user
       if (!userId && form.password.value !== form.confirm_password.value) {
@@ -308,25 +318,36 @@ class UserManager {
         last_name: form.lastname.value,
         email: form.emailaddress.value,
         // Handle group selection - modify this if backend expects a different format
-        group_ids: [parseInt(form.group.value)]
+        group_ids: [parseInt(form.group.value)],
       };
 
-      // Add password fields only for new user creation
-      if (!userId) {
-        userData.password = form.password.value;
-        userData.confirm_password = form.confirm_password.value;
-      } else {
-        // For updates, include is_active
+      if (userId) {
+        // For updates, include password only if provided
+        if (form.password.value || form.confirm_password.value) {
+          if (form.password.value !== form.confirm_password.value) {
+            throw new Error("Passwords do not match");
+          }
+          userData.password = form.password.value;
+          userData.confirm_password = form.confirm_password.value;
+        }
+        // Include is_active
         const isActiveElement = dom.getElement("is_active");
         if (isActiveElement) {
           userData.is_active = isActiveElement.checked;
         }
+      } else {
+        // For new users, require password
+        if (!form.password.value) {
+          throw new Error("Password is required for new users");
+        }
+        userData.password = form.password.value;
+        userData.confirm_password = form.confirm_password.value;
       }
 
       // Validate required fields
       for (const key in userData) {
-        if (userData[key] === '' && key !== 'is_active') {
-          throw new Error(`${key.replace('_', ' ')} is required`);
+        if (userData[key] === "" && key !== "is_active") {
+          throw new Error(`${key.replace("_", " ")} is required`);
         }
       }
 
@@ -342,7 +363,9 @@ class UserManager {
         if (this.modal) {
           this.modal.hide();
         } else {
-          console.warn("Modal instance is not available, trying to close manually");
+          console.warn(
+            "Modal instance is not available, trying to close manually"
+          );
           const modalElement = document.getElementById("userModal");
           if (modalElement) {
             const bsModal = bootstrap.Modal.getInstance(modalElement);
@@ -351,7 +374,7 @@ class UserManager {
             }
           }
         }
-        
+
         await this.loadUsers();
         alert(userId ? "User updated successfully" : "User added successfully");
         form.reset();
@@ -372,12 +395,21 @@ class UserManager {
 
     rows.forEach((row) => {
       const username = row.querySelector("h6")?.textContent.toLowerCase() || "";
-      const firstName = row.querySelectorAll("p.text-xs.font-weight-bold")[0]?.textContent.toLowerCase() || "";
-      const lastName = row.querySelectorAll("p.text-xs.font-weight-bold")[1]?.textContent.toLowerCase() || "";
-      const email = row.querySelectorAll("p.text-xs.font-weight-bold")[2]?.textContent.toLowerCase() || "";
+      const firstName =
+        row
+          .querySelectorAll("p.text-xs.font-weight-bold")[0]
+          ?.textContent.toLowerCase() || "";
+      const lastName =
+        row
+          .querySelectorAll("p.text-xs.font-weight-bold")[1]
+          ?.textContent.toLowerCase() || "";
+      const email =
+        row
+          .querySelectorAll("p.text-xs.font-weight-bold")[2]
+          ?.textContent.toLowerCase() || "";
 
       row.style.display =
-        username.includes(searchTerm) || 
+        username.includes(searchTerm) ||
         firstName.includes(searchTerm) ||
         lastName.includes(searchTerm) ||
         email.includes(searchTerm)
@@ -401,26 +433,26 @@ class UserManager {
     if (userForm) {
       userForm.reset();
     }
-    
+
     const userIdElement = dom.getElement("userId");
     if (userIdElement) {
       userIdElement.value = "";
     }
 
     // Show password fields for new user
-    document.querySelectorAll('.password-field').forEach(field => {
-      field.style.display = '';
+    document.querySelectorAll(".password-field").forEach((field) => {
+      field.style.display = "";
     });
-    
+
     // Hide is_active for new users
-    const editOnlyField = document.querySelector('.edit-only-field');
+    const editOnlyField = document.querySelector(".edit-only-field");
     if (editOnlyField) {
-      editOnlyField.style.display = 'none';
+      editOnlyField.style.display = "none";
     }
 
     // Remove is-filled class from all input groups
-    document.querySelectorAll('.input-group').forEach(group => {
-      group.classList.remove('is-filled');
+    document.querySelectorAll(".input-group").forEach((group) => {
+      group.classList.remove("is-filled");
     });
 
     // Check if modal is available
@@ -449,68 +481,74 @@ class UserManager {
       const user = Array.isArray(userData) ? userData[0] : userData;
 
       // Set modal title and user ID
-      const modalLabelElement = dom.getElement('userModalLabel');
+      const modalLabelElement = dom.getElement("userModalLabel");
       if (modalLabelElement) {
-        modalLabelElement.textContent = 'Edit User';
+        modalLabelElement.textContent = "Edit User";
       }
-      
-      const userIdElement = dom.getElement('userId');
+
+      const userIdElement = dom.getElement("userId");
       if (userIdElement) {
         userIdElement.value = userId;
       }
-      
+
       // Populate user fields
-      const usernameElement = dom.getElement('username');
+      const usernameElement = dom.getElement("username");
       if (usernameElement) {
         usernameElement.value = user.username;
       }
-      
-      const firstnameElement = dom.getElement('firstname');
+
+      const firstnameElement = dom.getElement("firstname");
       if (firstnameElement) {
-        firstnameElement.value = user.first_name || '';
+        firstnameElement.value = user.first_name || "";
       }
-      
-      const lastnameElement = dom.getElement('lastname');
+
+      const lastnameElement = dom.getElement("lastname");
       if (lastnameElement) {
-        lastnameElement.value = user.last_name || '';
+        lastnameElement.value = user.last_name || "";
       }
-      
-      const emailElement = dom.getElement('emailaddress');
+
+      const emailElement = dom.getElement("emailaddress");
       if (emailElement) {
-        emailElement.value = user.email || '';
+        emailElement.value = user.email || "";
       }
-      
-      const groupElement = dom.getElement('group');
+
+      const groupElement = dom.getElement("group");
       if (groupElement && user.groups && user.groups.length > 0) {
         // Set the group dropdown to the correct group id
-        groupElement.value = user.groups[0].id || '';
+        groupElement.value = user.groups[0].id || "";
       } else if (groupElement && user.group_ids && user.group_ids.length > 0) {
         // Fallback to group_ids if present
-        groupElement.value = user.group_ids[0] || '';
+        groupElement.value = user.group_ids[0] || "";
       }
-      
+
       // Set is_active checkbox
-      const isActiveCheckbox = dom.getElement('is_active');
+      const isActiveCheckbox = dom.getElement("is_active");
       if (isActiveCheckbox) {
         isActiveCheckbox.checked = user.is_active === true;
       }
 
-      // Hide password fields for editing
-      document.querySelectorAll('.password-field').forEach(field => {
-        field.style.display = 'none';
+      // Show password fields for editing with empty values
+      document.querySelectorAll(".password-field").forEach((field) => {
+        field.style.display = ""; // Changed from 'none' to 'block'
+        // Clear any previous password values
+        const input = field.querySelector("input");
+        if (input) {
+          input.value = "";
+          input.required = false; // Make passwords optional for editing
+        }
       });
-      
+
       // Show is_active for editing
-      const editOnlyField = document.querySelector('.edit-only-field');
+      const editOnlyField = document.querySelector(".edit-only-field");
       if (editOnlyField) {
-        editOnlyField.style.display = 'block';
+        editOnlyField.style.display = "block";
       }
 
       // Add is-filled class to all input groups with values
-      document.querySelectorAll('.input-group').forEach(group => {
-        const input = group.querySelector('input, select');
+      document.querySelectorAll(".input-group").forEach((group) => {
+        const input = group.querySelector("input, select");
         if (input && input.value) {
-          group.classList.add('is-filled');
+          group.classList.add("is-filled");
         }
       });
 
@@ -533,7 +571,7 @@ class UserManager {
       alert(error.message);
     }
   }
-  
+
   /**
    * Handles user deletion with confirmation
    * @param {string} userId - ID of user being deleted
