@@ -170,68 +170,60 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="userModalLabel">Add/Edit User</h5>
-              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <h5 class="modal-title" id="userModalLabel">Add New User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="userForm">
               <input type="hidden" id="userId">
               <div class="modal-body">
-                  <input type="hidden" id="studentId">
-                  <!-- User inputs -->
-                  <div class="input-group input-group-outline my-3">
-                      <label class="form-label">Username</label>
-                      <input type="text" 
-                             class="form-control" 
-                             id="username" 
-                             required>
-                  </div>
-                  <div class="input-group input-group-outline my-3">
-                      <label class="form-label">First Name</label>
-                      <input type="text" 
-                             class="form-control" 
-                             id="firstname" 
-                             required>
-                  </div>
-                  <div class="input-group input-group-outline my-3">
-                      <label class="form-label">Last Name</label>
-                      <input type="text" 
-                             class="form-control" 
-                             id="lastname" 
-                             required>
-                  </div>
-                  <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" 
-                           class="form-control" 
-                           id="emailaddress" 
-                           required>
-                </div>
-                  <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" 
-                           class="form-control" 
-                           id="password" 
-                           required>
-                </div>
+                <!-- Form Fields -->
                 <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Confirm Password</label>
-                    <input type="password" 
-                           class="form-control" 
-                           id="confirmpassword" 
-                           required>
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" name="username" required>
                 </div>
-                  <!-- Group selector for new user -->
-                  <div class="input-group input-group-outline my-3" id="userSelectGroup">
-                    <select class="form-control" id="userSelect">
-                        <option value="">-- Select a Group --</option>
-                    </select>
+
+                <div class="input-group input-group-outline my-3 password-field">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+
+                <div class="input-group input-group-outline my-3 password-field">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
+            
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="firstname" name="firstname" required>
+                </div>
+            
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="lastname" name="lastname" required>
+                </div>
+            
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="emailaddress" name="emailaddress" required>
+                </div>
+            
+                <div class="input-group input-group-outline my-3">
+                  <select class="form-control" id="group" name="group" required>
+                    <option value="">Select Group</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Teacher</option>
+                    <option value="3">Student</option>
+                  </select>
+                </div>
+
+                <div class="form-check form-switch edit-only-field" style="display: none;">
+                  <input class="form-check-input" type="checkbox" id="is_active" name="is_active">
+                  <label class="form-check-label" for="is_active">Active Account</label>
                 </div>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
