@@ -170,7 +170,6 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script>
     let win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -206,48 +205,7 @@
       document.getElementById('bcaStudents').textContent = bcaStudents;
       document.getElementById('bimStudents').textContent = bimStudents;
       document.getElementById('bbsStudents').textContent = bbsStudents;
-    }
-
-    // Chart setup
-    document.addEventListener("DOMContentLoaded", function () {
-      const ctx = document.getElementById("admissionRatioChart").getContext('2d');
-
-      if (!ctx) {
-        console.error("Canvas element not found!");
-        return;
-      }
-
-      new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["BCA 22", "BCA 23", "BCA 24", "BCA 25"],
-          datasets: [{
-            data: [23, 22, 21, 24], // You can update this dynamically if needed
-            backgroundColor: ["#ff4757", "#1e90ff", "#ffce56", "#2ed573"],
-            hoverOffset: 10,
-            borderWidth: 2,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              position: "bottom",
-              labels: {
-                color: "#495057",
-                font: { size: 14 },
-              }
-            }
-          }
-        }
-      });
-
-      // Update student counts on page load
-      updateStudentCounts();
-    });
-
+    };
     // Listen for storage changes (e.g., from another tab)
     window.addEventListener('storage', updateStudentCounts);
   </script>
