@@ -13,13 +13,11 @@
     transition: opacity 0.3s ease;
 }
 
-/* Optional: add a fade-out class */
 .skeleton-overlay.fade-out {
     opacity: 0;
     pointer-events: none;
 }
 
-/* Adjust the following if you need skeleton visuals that mimic your content */
 .skeleton {
     background-color: #e0e0e0;
     border-radius: 4px;
@@ -44,7 +42,6 @@
     100% { transform: translateX(100%); }
 }
 
-/* Example for a full overlay skeleton element */
 .skeleton-full {
     width: 90%;
     height: 90%;
