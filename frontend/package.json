@@ -31,7 +31,10 @@
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "form-data": "^4.0.2"
+    "form-data": "^4.0.2",
+    "jquery": "^3.7.1",
+    "shimmer": "^1.2.1",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "electron": "^34.2.0",
