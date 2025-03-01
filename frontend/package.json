@@ -34,6 +34,7 @@
     "form-data": "^4.0.2",
     "jquery": "^3.7.1",
     "shimmer": "^1.2.1",
+    "sweetalert2": "^11.17.2",
     "toastr": "^2.1.4"
   },
   "devDependencies": {
