@@ -8,9 +8,14 @@
   <script src="../components/loadHead.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios for API calls -->
   <link rel="stylesheet" href="../public/home.css">
+  <link rel="stylesheet" href="..//public/loading.css">
+  <script src="https://unpkg.com/shimmer.js/dist/shimmer.min.js"></script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+  <div id="skeletonOverlay" class="skeleton-overlay">
+    <div class="skeleton skeleton-full"></div>
+  </div>
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -106,7 +111,7 @@
           </div>
           <ul class="navbar-nav d-flex align-items-center justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="#">Some Feature</a>
+                <a class="btn btn-outline-primary btn-sm mb-0 me-3 hover:bg-blue-50" href="./form.html">Contact Us</a>
             </li>
             <li class="mt-1">
               <a class="github-button" href="https://github.com/bitgurkhas/Student-data-management" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="star-us-on-github">Star</a>
@@ -208,6 +213,42 @@
     };
     // Listen for storage changes (e.g., from another tab)
     window.addEventListener('storage', updateStudentCounts);
+  </script>
+
+  <script>
+    // Remove skeleton when all page resources (HTML, CSS, JS, images, etc.) are loaded.
+    window.addEventListener('load', () => {
+      const overlay = document.getElementById('skeletonOverlay');
+      overlay.classList.add('fade-out');
+      setTimeout(() => { overlay.style.display='none'; }, 300);
+    });
+
+    // Fallback: Hide skeleton after 5 seconds (in case something delays the load event)
+    setTimeout(() => {
+      const overlay = document.getElementById('skeletonOverlay');
+      overlay.classList.add('fade-out');
+      setTimeout(() => { overlay.style.display='none'; }, 300);
+    }, 5000);
+  </script>
+
+  <script>
+    // Initialize shimmer effects
+    shimmer.config({
+      duration: 1500,
+      intensity: 0.9
+    });
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply shimmer to all skeleton elements
+      shimmer.wrap('.skeleton-element');
+      
+      // Simulate data loading
+      setTimeout(() => {
+        updateStudentCounts();
+        initChart();
+        shimmer.unwrap('.skeleton-element'); // Remove shimmer
+      }, 2000);
+    });
   </script>
 </body>
 </html>
