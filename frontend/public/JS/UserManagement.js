@@ -1,6 +1,24 @@
 /**
  * Base configuration and authentication
  */
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 const API_BASE_URL = "http://localhost:8000/api";
 const AUTH_HEADER = () => ({
   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -376,12 +394,12 @@ class UserManager {
         }
 
         await this.loadUsers();
-        showNotification(userId ? "User updated successfully" : "User added successfully", "success");
+        toastr.success(userId ? "User updated successfully" : "User added successfully");
         form.reset();
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      showNotification(error.message, "danger");
+      toastr.error(error.message);
     }
   }
 
@@ -568,7 +586,7 @@ class UserManager {
       }
     } catch (error) {
       console.error("Error editing user:", error);
-      showNotification(error.message, "danger");
+      toastr.error(error.message);
     }
   }
 
@@ -577,18 +595,29 @@ class UserManager {
    * @param {string} userId - ID of user being deleted
    */
   async deleteUser(userId) {
-    if (confirm("Are you sure you want to delete this user?")) {
-      try {
-        await api.deleteUser(userId);
-        await this.loadUsers();
-        showNotification("User deleted successfully", "success");
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        showNotification(error.message, "danger");
-      }
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    });
+  
+    if (!result.isConfirmed) return;
+  
+    try {
+      await api.deleteUser(userId);
+      await this.loadUsers();
+      Swal.fire("Deleted!", "User has been deleted.", "success");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      Swal.fire("Error!", error.message, "error");
     }
   }
-}
+}  
 
 // Initialize the application
 if (document.readyState === "loading") {

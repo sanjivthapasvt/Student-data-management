@@ -1,3 +1,21 @@
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 /**
  * Base configuration and authentication
  */
@@ -5,7 +23,6 @@ const API_BASE_URL = "http://localhost:8000/api";
 const AUTH_HEADER = () => ({
   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 });
-
 /**
  * Utility Functions
  */
@@ -151,6 +168,7 @@ const dom = {
  * Main Application Class
  * Manages all marksheet operations and UI interactions
  */
+
 class MarksManager {
   constructor() {
     this.modal = null;
@@ -176,6 +194,7 @@ class MarksManager {
   /**
    * Populates student dropdown with all available students
    */
+  
   async loadStudentsDropdown() {
     try {
       const students = await api.getStudents();
@@ -194,7 +213,7 @@ class MarksManager {
         studentSelect.appendChild(option);
       });
     } catch (error) {
-      showNotification(error.message, "danger");
+      toastr.error(error.message);
     }
   }
 
@@ -296,9 +315,9 @@ class MarksManager {
   
       this.modal.hide();
       await this.loadMarks();
-      showNotification(studentId ? "Marks updated successfully" : "Marks added successfully", "success");
+      toastr.success(studentId ? "Marks updated successfully" : "Marks added successfully");
     } catch (error) {
-      showNotification(error.message, "danger");
+      toastr.error(error.message);
     }
   }
 
@@ -387,7 +406,7 @@ class MarksManager {
 
         this.modal.show();
     } catch (error) {
-      showNotification(error.message, "danger");
+      toastr.error(error.message);
     }
 }
   
@@ -396,16 +415,27 @@ class MarksManager {
    * @param {string} studentId - ID of student whose marks are being deleted
    */
   async deleteMarks(studentId) {
-    if (confirm("Are you sure you want to delete these marks?")) {
-      try {
-        await api.deleteMarks(studentId);
-        await this.loadMarks();
-        showNotification("Marks deleted successfully", "success");
-      } catch (error) {
-        showNotification(error.message, "danger");
-      }
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+  
+    if (!result.isConfirmed) return;
+  
+    try {
+      await api.deleteMarks(studentId);
+      await this.loadMarks();
+      Swal.fire("Deleted!", "Marks have been deleted.", "success");
+    } catch (error) {
+      Swal.fire("Error!", error.message, "error");
     }
   }
+  
 }
 
 // Initialize the application
