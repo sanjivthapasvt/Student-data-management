@@ -8,9 +8,15 @@
   <script src="../components/loadHead.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios for API calls -->
   <link rel="stylesheet" href="../public/profile.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/loading.css">
+  <script src="../public/loading.js"></script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+  <div id="skeletonOverlay" class="skeleton-overlay">
+    <div class="skeleton skeleton-full"></div>
+  </div>
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
       <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
