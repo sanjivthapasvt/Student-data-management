@@ -64,6 +64,18 @@
       </footer>
     </div>
   </main>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificationToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body" id="toastMessage">
+          <!-- Notification message -->
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+  <script src="../public/JS/GlobalScript.js"></script>
+
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -96,11 +108,11 @@
             if (success) {
                 window.location.href = 'home.html';
             } else {
-                alert('Login failed. Please check your credentials.');
+              showNotification('Login failed. Please check your credentials.', "danger");
             }
         } catch (error) {
             console.error('Login error:', error);
-            alert('An error occurred during login.');
+            showNotification('An error occurred during login.', "danger");
         }
     });
   </script>

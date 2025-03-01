@@ -162,11 +162,11 @@ async function handleDelete(studentId) {
     try {
       await studentService.deleteStudent(studentId);
       document.getElementById(`student-${studentId}`).remove();
-      alert("Student deleted successfully");
+      showNotification("Student deleted successfully", "success");
     } catch (error) {
-      alert(
+      showNotification(
         "Error deleting student: " +
-          (error.response?.data?.detail || error.message)
+          (error.response?.data?.detail || error.message), "danger"
       );
     }
   }
@@ -207,7 +207,7 @@ async function openEditModal(studentId) {
     const modal = new bootstrap.Modal(document.getElementById("editStudentModal"));
     modal.show();
   } catch (error) {
-    alert("Error loading student details: " + error.message);
+    showNotification("Error loading student details: " + error.message), "danger";
   }
 }
 
@@ -243,11 +243,11 @@ async function handleEditStudent(event) {
     );
     if (modal) modal.hide();
     await loadStudents();
-    alert("Student updated successfully");
+    showNotification("Student updated successfully", "success");
   } catch (error) {
-    alert(
+    showNotification(
       "Error updating student: " +
-        (error.response?.data?.detail || error.message)
+        (error.response?.data?.detail || error.message), "danger"
     );
   }
 }
@@ -278,11 +278,11 @@ async function handleCreateStudent(event) {
     );
     if (modal) modal.hide();
     await loadStudents();
-    alert("Student created successfully");
+    showNotification("Student created successfully", "success");
   } catch (error) {
-    alert(
+    showNotification(
       "Error creating student: " +
-        (error.response?.data?.detail || error.message)
+        (error.response?.data?.detail || error.message), "danger"
     );
   }
 }
@@ -313,14 +313,14 @@ async function handleCreateStudent(event) {
     );
     if (modal) modal.hide();
     await loadStudents();
-    alert("Student created successfully");
+    showNotification("Student created successfully", "success");
 
     // Notify Assignment Dashboard of new student via localStorage
     localStorage.setItem('newStudentCreated', Date.now().toString());
   } catch (error) {
-    alert(
+    showNotification(
       "Error creating student: " +
-        (error.response?.data?.detail || error.message)
+        (error.response?.data?.detail || error.message), "danger"
     );
   }
 }
@@ -369,7 +369,7 @@ async function handleCreateStudent(event) {
     const modal = bootstrap.Modal.getInstance(document.getElementById("createStudentModal"));
     if (modal) modal.hide();
     await loadStudents();
-    alert("Student created successfully");
+    showNotification("Student created successfully", "success");
 
     // Ensure student data is stored in localStorage
     if (!studentName || !studentRoll) throw new Error("Name or Roll is empty");
@@ -382,7 +382,7 @@ async function handleCreateStudent(event) {
     console.log("Stored student:", { name: studentName, roll: studentRoll });
     console.log("All students in localStorage:", students);
   } catch (error) {
-    alert("Error creating student: " + (error.response?.data?.detail || error.message));
+    showNotification("Error creating student: " + (error.response?.data?.detail || error.message), "danger");
     console.error("Creation error:", error);
   }
 }
