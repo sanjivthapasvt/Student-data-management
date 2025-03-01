@@ -1,0 +1,130 @@
+/* loading.css - Skeleton loading styles */
+
+.skeleton-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  
+  .skeleton-full {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Sidebar skeleton */
+  .skeleton-full::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Navbar skeleton */
+  .skeleton-full::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 250px;
+    right: 0;
+    height: 70px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Content area skeleton */
+  .skeleton-cards-container {
+    position: absolute;
+    top: 100px;
+    left: 280px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .skeleton-card {
+    height: 180px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Card content lines */
+  .skeleton-card::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 60%;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  .skeleton-card::after {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    width: 80%;
+    height: 80px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    background: repeating-linear-gradient(
+      0deg,
+      #e0e0e0,
+      #e0e0e0 16px,
+      #f0f0f0 16px,
+      #f0f0f0 24px
+    );
+  }
+  
+  /* Animation for skeleton loading */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  /* Media query for responsive design */
+  @media (max-width: 992px) {
+    .skeleton-full::before {
+      display: none;
+    }
+    
+    .skeleton-cards-container {
+      left: 20px;
+      top: 80px;
+    }
+    
+    .skeleton-full::after {
+      left: 0;
+    }
+  }
