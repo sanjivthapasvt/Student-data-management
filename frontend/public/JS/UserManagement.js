@@ -376,12 +376,12 @@ class UserManager {
         }
 
         await this.loadUsers();
-        alert(userId ? "User updated successfully" : "User added successfully");
+        showNotification(userId ? "User updated successfully" : "User added successfully", "success");
         form.reset();
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      alert(error.message);
+      showNotification(error.message, "danger");
     }
   }
 
@@ -568,7 +568,7 @@ class UserManager {
       }
     } catch (error) {
       console.error("Error editing user:", error);
-      alert(error.message);
+      showNotification(error.message, "danger");
     }
   }
 
@@ -581,10 +581,10 @@ class UserManager {
       try {
         await api.deleteUser(userId);
         await this.loadUsers();
-        alert("User deleted successfully");
+        showNotification("User deleted successfully", "success");
       } catch (error) {
         console.error("Error deleting user:", error);
-        alert(error.message);
+        showNotification(error.message, "danger");
       }
     }
   }

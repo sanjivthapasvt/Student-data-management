@@ -194,7 +194,7 @@ class MarksManager {
         studentSelect.appendChild(option);
       });
     } catch (error) {
-      alert(error.message);
+      showNotification(error.message, "danger");
     }
   }
 
@@ -296,9 +296,9 @@ class MarksManager {
   
       this.modal.hide();
       await this.loadMarks();
-      alert(studentId ? "Marks updated successfully" : "Marks added successfully");
+      showNotification(studentId ? "Marks updated successfully" : "Marks added successfully", "success");
     } catch (error) {
-      alert(error.message);
+      showNotification(error.message, "danger");
     }
   }
 
@@ -387,7 +387,7 @@ class MarksManager {
 
         this.modal.show();
     } catch (error) {
-        alert(error.message);
+      showNotification(error.message, "danger");
     }
 }
   
@@ -400,9 +400,9 @@ class MarksManager {
       try {
         await api.deleteMarks(studentId);
         await this.loadMarks();
-        alert("Marks deleted successfully");
+        showNotification("Marks deleted successfully", "success");
       } catch (error) {
-        alert(error.message);
+        showNotification(error.message, "danger");
       }
     }
   }

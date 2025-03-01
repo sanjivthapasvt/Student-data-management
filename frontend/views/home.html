@@ -5,7 +5,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Home</title>
-  <script src="../components/loadHead.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900">
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet">
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet">
+  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios for API calls -->
   <link rel="stylesheet" href="../public/home.css">
 </head>
@@ -100,7 +105,7 @@
           </div>
           <ul class="navbar-nav d-flex align-items-center justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="#">Some Feature</a>
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="./form.html">Contact Us</a>
             </li>
             <li class="mt-1">
               <a class="github-button" href="https://github.com/bitgurkhas/Student-data-management" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="star-us-on-github">Star</a>
@@ -158,13 +163,22 @@
       </div>
     </main>
   </main>
-
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificationToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body" id="toastMessage">
+          <!-- Notification message -->
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+  <script src="../public/JS/GlobalScript.js"></script>
   <!-- Core JS Files -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script>
     let win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
