@@ -8,9 +8,14 @@
     Login
   </title>
   <script src="../components/loadHead.js"></script>
+  <link rel="stylesheet" href="../public/loading.css">
+  <script src="../public/loading.js"></script>
 </head>
 
-<body class="bg-gray-200">
+<body class="g-sidenav-show bg-gray-100">
+  <div id="skeletonOverlay" class="skeleton-overlay">
+    <div class="skeleton skeleton-full"></div>
+  </div>
   <main class="main-content  mt-0">
     <div class="page-header align-items-start min-vh-100" style="background-image: url('../assets/img/back.jpg');">
       <span class="mask bg-gradient-dark opacity-6"></span>
