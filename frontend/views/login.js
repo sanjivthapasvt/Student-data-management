@@ -8,7 +8,7 @@ document.getElementById('sign-in-form').addEventListener('submit', async (e) => 
     try {
         const success = await authService.login(username, password);
         if (success) {
-            window.location.href = 'home.html';
+            window.location.href = 'profile.html';
             toastr.success("Successfully logged in")
         } else {
           toastr.error('Login failed. Please check your credentials.');
