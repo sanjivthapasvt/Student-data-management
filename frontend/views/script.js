@@ -159,19 +159,33 @@ function createStudentCard(student) {
 }
 
 async function handleDelete(studentId) {
-  if (confirm("Are you sure you want to delete this student?")) {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to undo this action!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  });
+
+  if (result.isConfirmed) {
     try {
       await studentService.deleteStudent(studentId);
       document.getElementById(`student-${studentId}`).remove();
-      toastr.success("Student deleted successfully");
+      
+      Swal.fire("Deleted!", "Student has been removed.", "success");
     } catch (error) {
-      toastr.error(
-        "Error deleting student: " +
-          (error.response?.data?.detail || error.message)
+      Swal.fire(
+        "Error!",
+        "Error deleting student: " + (error.response?.data?.detail || error.message),
+        "error"
       );
     }
   }
 }
+
 
 async function openEditModal(studentId) {
   try {
@@ -287,7 +301,7 @@ async function handleCreateStudent(event) {
     );
   }
 }
-// Existing handleCreateStudent function (modified to add notification for Assignment Dashboard)
+// Existing handleCreateStudent function
 async function handleCreateStudent(event) {
   event.preventDefault();
   const formData = new FormData();
