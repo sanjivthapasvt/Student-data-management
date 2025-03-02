@@ -186,7 +186,7 @@ async function handleDelete(studentId) {
   }
 }
 
-
+//for summning edit form
 async function openEditModal(studentId) {
   try {
     const student = await studentService.getStudent(studentId);
@@ -262,79 +262,6 @@ async function handleEditStudent(event) {
   } catch (error) {
     toastr.error(
       "Error updating student: " +
-        (error.response?.data?.detail || error.message)
-    );
-  }
-}
-//handle form submission of create student
-async function handleCreateStudent(event) {
-  event.preventDefault();
-  const formData = new FormData();
-  formData.append("name", document.getElementById("studentName").value);
-  formData.append("roll", document.getElementById("studentRoll").value);
-  formData.append(
-    "student_class",
-    document.getElementById("studentClass").value
-  );
-  formData.append("section", document.getElementById("studentSection").value);
-  formData.append("address", document.getElementById("studentAddress").value);
-
-  const photoInput = document.getElementById("studentPhoto");
-  if (photoInput.files.length > 0) {
-    formData.append("photo", photoInput.files[0]);
-  }
-
-  try {
-    await studentService.createStudent(formData);
-    // Clear form and reload students
-    document.getElementById("createStudentForm").reset();
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("createStudentModal")
-    );
-    if (modal) modal.hide();
-    await loadStudents();
-    toastr.success("Student created successfully");
-  } catch (error) {
-    toastr.error(
-      "Error creating student: " +
-        (error.response?.data?.detail || error.message)
-    );
-  }
-}
-// Existing handleCreateStudent function
-async function handleCreateStudent(event) {
-  event.preventDefault();
-  const formData = new FormData();
-  formData.append("name", document.getElementById("studentName").value);
-  formData.append("roll", document.getElementById("studentRoll").value);
-  formData.append(
-    "student_class",
-    document.getElementById("studentClass").value
-  );
-  formData.append("section", document.getElementById("studentSection").value);
-  formData.append("address", document.getElementById("studentAddress").value);
-
-  const photoInput = document.getElementById("studentPhoto");
-  if (photoInput.files.length > 0) {
-    formData.append("photo", photoInput.files[0]);
-  }
-
-  try {
-    await studentService.createStudent(formData);
-    // Clear form and reload students in Dashboard
-    document.getElementById("createStudentForm").reset();
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("createStudentModal")
-    );
-    if (modal) modal.hide();
-    await loadStudents();
-    toastr.success("Student created successfully");
-
-    // Notify Assignment Dashboard of new student via localStorage
-    localStorage.setItem('newStudentCreated', Date.now().toString());
-  } catch (error) {
-    toastr.error(
-      "Error creating student: " +
         (error.response?.data?.detail || error.message)
     );
   }

@@ -113,7 +113,7 @@ const dom = {
 
   // Generates HTML for table rows
   createTableRow: (user) => {
-    // Modified to handle groups array properly
+    // handle groups array
     const getGroupName = (user) => {
       // Check if the user has groups and it's an array with items
       if (user.groups && Array.isArray(user.groups) && user.groups.length > 0) {
