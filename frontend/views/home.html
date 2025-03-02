@@ -229,35 +229,7 @@
       if (!ctx) {
         console.error("Canvas element not found!");
         return;
-      }
-
-      new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["BCA 22", "BCA 23", "BCA 24", "BCA 25"],
-          datasets: [{
-            data: [23, 22, 21, 24], // You can update this dynamically if needed
-            backgroundColor: ["#ff4757", "#1e90ff", "#ffce56", "#2ed573"],
-            hoverOffset: 10,
-            borderWidth: 2,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              position: "bottom",
-              labels: {
-                color: "#495057",
-                font: { size: 14 },
-              }
-            }
-          }
-        }
-      });
-
+      };
       // Update student counts on page load
       updateStudentCounts();
     });
