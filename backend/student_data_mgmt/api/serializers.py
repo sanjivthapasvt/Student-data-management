@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import Student, StudentMarks
-
+from attendance.serializers import AttendanceSerializer
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,11 +21,17 @@ class UserManagementSerializer(serializers.ModelSerializer):
         write_only=True,
         required=False
     )
+    # Add attendance records for students
+    attendances_as_student = AttendanceSerializer(many=True, read_only=True, source="attendances_as_student")
+    
+    # Add attendance records for teachers
+    attendances_as_teacher = AttendanceSerializer(many=True, read_only=True, source="attendances_as_teacher")
+
 
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email',
-                  'is_active', 'password', 'confirm_password', 'groups', 'group_ids']
+                  'is_active', 'password', 'confirm_password', 'groups', 'group_ids', 'attendances_as_teacher', 'attendances_as_student']
 
     def validate(self, data):
         if data.get('password') != data.get('confirm_password'):
