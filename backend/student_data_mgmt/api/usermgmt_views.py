@@ -54,7 +54,7 @@ class UserManagementDetail(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# Optional: Group management endpoints
+
 class GroupList(APIView):
     permission_classes = [IsAdminGroup]
     
