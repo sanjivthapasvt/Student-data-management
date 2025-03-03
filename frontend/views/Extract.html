@@ -73,6 +73,163 @@
       padding: 20px;
     }
   </style>
+  <style>
+    /* Upload Section Styling */
+    .upload-section {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+  
+    .upload-section:hover {
+      transform: translateY(-5px);
+    }
+  
+    .upload-section input[type="file"] {
+      display: block;
+      margin: 0 auto 15px;
+      padding: 10px;
+      border: 2px dashed #007bff;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 1em;
+      color: #333;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+  
+    .upload-section input[type="file"]:hover {
+      border-color: #0056b3;
+    }
+  
+    .upload-section button {
+      padding: 12px 30px;
+      background: linear-gradient(90deg, #007bff, #00c4ff);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+  
+    .upload-section button:hover {
+      background: linear-gradient(90deg, #0056b3, #009cff);
+      transform: scale(1.05);
+    }
+  
+    .upload-section button:active {
+      transform: scale(0.98);
+    }
+  
+    /* Identity Card Styling */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 30px;
+      justify-content: center;
+      background: #f9f9f9;
+      border-radius: 15px;
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+  
+    .identity-card {
+      background: linear-gradient(145deg, #ffffff, #e6e6e6);
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      width: 320px;
+      padding: 25px;
+      text-align: center;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+  
+    .identity-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+  
+    .identity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #007bff, #00c4ff);
+    }
+  
+    .identity-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 4px solid #007bff;
+      transition: border-color 0.3s ease;
+    }
+  
+    .identity-card img:hover {
+      border-color: #00c4ff;
+    }
+  
+    .identity-card h3 {
+      margin: 15px 0;
+      font-size: 1.4em;
+      color: #222;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  
+    .identity-card p {
+      margin: 8px 0;
+      font-size: 1em;
+      color: #555;
+      line-height: 1.5;
+    }
+  
+    .identity-card .marks {
+      font-weight: 700;
+      color: #007bff;
+      font-size: 1.1em;
+      background: rgba(0, 123, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  
+    .identity-card .photo-upload {
+      margin-top: 15px;
+    }
+  
+    .identity-card input[type="file"] {
+      font-size: 0.9em;
+      padding: 8px;
+      border: 2px solid #007bff;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+  
+    .identity-card input[type="file"]:hover {
+      border-color: #0056b3;
+      background: #f0f8ff;
+    }
+  </style>
   <link rel="stylesheet" href="../public/loading.css">
   <script src="../public/loading.js"></script>
 </head>
