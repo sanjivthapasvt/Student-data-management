@@ -23,4 +23,5 @@ class AttendanceViewSet(viewsets.ModelViewSet):
         return super().get_queryset()
 
     def perform_create(self, serializer):
+        """ Automatically set the teacher to the logged-in user """
         serializer.save(teacher=self.request.user)

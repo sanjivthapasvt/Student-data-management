@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.contrib.auth import get_user_model
 # Create your models here.
@@ -12,7 +13,7 @@ class Attendance(models.Model):
 
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="attendances_as_student",limit_choices_to={'groups__name': 'student'})
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="attendances_as_teacher",limit_choices_to={'groups__name': 'teacher'})
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=date.today)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 
     def __str__(self):
