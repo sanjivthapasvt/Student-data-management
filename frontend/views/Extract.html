@@ -238,7 +238,7 @@
   <div id="skeletonOverlay" class="skeleton-overlay">
     <div class="skeleton skeleton-full"></div>
   </div>
-  <!-- Navigation -->
+  <!-- Navigation (unchanged) -->
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -282,7 +282,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active bg-gradient-dark text-white" href="Extract.html">
-            <i class="material-symbols-rounded opacity-5">Files</i> <!-- Updated icon -->
+            <i class="material-symbols-rounded opacity-5">Files</i>
             <span class="nav-link-text ms-1">Extract</span>
           </a>
         </li>
@@ -319,7 +319,7 @@
 
   <!-- Main Content -->
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-    <!-- Navbar -->
+    <!-- Navbar (unchanged) -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
@@ -361,10 +361,11 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Upload Section -->
+    <!-- Updated Upload Section with Clear Button -->
     <div class="upload-section">
       <input type="file" id="excelFile" accept=".xlsx,.xls">
       <button onclick="uploadFile()">Upload Excel</button>
+      <button onclick="clearData()" style="margin-left: 10px; background: #dc3545; color: white;">Clear Data</button>
     </div>
 
     <!-- Extracted Data Display -->
@@ -372,13 +373,12 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="notificationToast" class="toast align-items-center text-white bg-success border-0" role="alert">
         <div class="d-flex">
-          <div class="toast-body" id="toastMessage">
-            <!-- Notification message -->
-          </div>
+          <div class="toast-body" id="toastMessage"></div>
           <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
       </div>
     </div>
+
     <!-- Core JS Files -->
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -396,10 +396,87 @@
     <script src="../assets/js/material-dashboard.min.js"></script>
     <script src="./script.js"></script>
 
-    <!-- Upload and Display Logic -->
+    <!-- Updated Script with Persistence -->
     <script>
+      // Load saved data when page loads
+      window.onload = function() {
+        loadSavedData();
+      };
+
+      // Function to load saved data from localStorage
+      function loadSavedData() {
+        const savedData = localStorage.getItem('extractedData');
+        if (savedData) {
+          const data = JSON.parse(savedData);
+          displayData(data);
+        }
+      }
+
+      // Function to display data
+      function displayData(data) {
+        const container = document.getElementById('result');
+        container.innerHTML = '';
+
+        data.rows.forEach((row, index) => {
+          const card = document.createElement('div');
+          card.className = 'identity-card';
+
+          const img = document.createElement('img');
+          img.id = `photo-${index}`;
+          img.src = row.photo || 'https://via.placeholder.com/100';
+          card.appendChild(img);
+
+          card.innerHTML += `
+            <h3>${row.name || 'N/A'}</h3>
+            <p>Roll: ${row.roll || 'N/A'}</p>
+            <p>Class: ${row.student_class || 'N/A'}</p>
+            <p>Section: ${row.section || 'N/A'}</p>
+            <p>Address: ${row.address || 'N/A'}</p>
+            <p class="marks">Marks: ${row.marks || 'N/A'}</p>
+          `;
+
+          const photoUpload = document.createElement('div');
+          photoUpload.className = 'photo-upload';
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/*';
+          input.id = `upload-${index}`;
+          input.onchange = function() {
+            const file = this.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                document.getElementById(`photo-${index}`).src = e.target.result;
+                updatePhotoInStorage(index, e.target.result);
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          photoUpload.appendChild(input);
+          card.appendChild(photoUpload);
+
+          container.appendChild(card);
+        });
+      }
+
+      // Function to update photo in localStorage
+      function updatePhotoInStorage(index, photoData) {
+        const savedData = localStorage.getItem('extractedData');
+        if (savedData) {
+          const data = JSON.parse(savedData);
+          data.rows[index].photo = photoData;
+          localStorage.setItem('extractedData', JSON.stringify(data));
+        }
+      }
+
+      // Upload file function
       async function uploadFile() {
         const fileInput = document.getElementById('excelFile');
+        if (!fileInput.files[0]) {
+          showToast('Please select a file first', 'bg-danger');
+          return;
+        }
+
         const formData = new FormData();
         formData.append('excelFile', fileInput.files[0]);
 
@@ -410,64 +487,49 @@
           });
           const data = await response.json();
 
-          // Clear previous results
-          const container = document.getElementById('result');
-          container.innerHTML = '';
+          // Save to localStorage with error handling
+          try {
+            localStorage.setItem('extractedData', JSON.stringify(data));
+          } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+              showToast('Storage limit exceeded. Please clear some data.', 'bg-danger');
+              return;
+            }
+          }
 
-          // Create identity cards
-          data.rows.forEach((row, index) => {
-            const card = document.createElement('div');
-            card.className = 'identity-card';
-
-            // Photo (placeholder or from Excel if URL provided)
-            const img = document.createElement('img');
-            img.id = `photo-${index}`;
-            img.src = row.photo || 'https://via.placeholder.com/100';
-            card.appendChild(img);
-
-            // Student details
-            card.innerHTML += `
-              <h3>${row.name}</h3>
-              <p>Roll: ${row.roll}</p>
-              <p>Class: ${row.student_class}</p>
-              <p>Section: ${row.section}</p>
-              <p>Address: ${row.address}</p>
-              <p class="marks">Marks: ${row.marks}</p>
-            `;
-
-            // Photo upload input
-            const photoUpload = document.createElement('div');
-            photoUpload.className = 'photo-upload';
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.id = `upload-${index}`;
-            input.onchange = function() {
-              const file = this.files[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                  document.getElementById(`photo-${index}`).src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-              }
-            };
-            photoUpload.appendChild(input);
-            card.appendChild(photoUpload);
-
-            container.appendChild(card);
-          });
+          // Display the data
+          displayData(data);
+          showToast('File uploaded successfully');
         } catch (error) {
           console.error('Error:', error);
           document.getElementById('result').innerHTML = 'Error: ' + error.message;
+          showToast('Error uploading file', 'bg-danger');
         }
       }
 
-      // Logout functionality (unchanged)
+      // Clear data function
+      function clearData() {
+        localStorage.removeItem('extractedData');
+        document.getElementById('result').innerHTML = '';
+        showToast('Data cleared successfully');
+      }
+
+      // Toast notification function
+      function showToast(message, bgClass = 'bg-success') {
+        const toast = document.getElementById('notificationToast');
+        const toastMessage = document.getElementById('toastMessage');
+        toast.className = `toast align-items-center text-white ${bgClass} border-0`;
+        toastMessage.textContent = message;
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+      }
+
+      // Logout functionality
       document.getElementById('logout-btn').addEventListener('click', async (e) => {
         e.preventDefault();
         const authService = require('../services/auth');
         authService.logout();
+        localStorage.removeItem('extractedData');
         window.location.href = 'sign-in.html';
       });
     </script>
