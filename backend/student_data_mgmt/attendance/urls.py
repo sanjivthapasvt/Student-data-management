@@ -5,6 +5,4 @@ from .views import AttendanceViewSet
 router = DefaultRouter()
 router.register(r'attendance', AttendanceViewSet)
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls 
