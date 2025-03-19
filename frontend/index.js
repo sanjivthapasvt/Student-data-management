@@ -11,7 +11,7 @@ function createWindow() {
         },
     });
 
-    win.loadFile(path.join(__dirname, 'views/initial.html'));
+    win.loadFile(path.join(__dirname, 'views/sign-in.html'));
 }
 
 app.whenReady().then(createWindow);
